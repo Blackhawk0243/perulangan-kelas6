@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mastering Loops - Petualangan Koding Kelas 6 🚀</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        heading: ['"Fredoka One"', 'cursive'],
+                        // Cursive dihilangkan agar tidak menjadi tegak bersambung jika font utama gagal dimuat
+                        heading: ['"Fredoka One"', '"Nunito"', 'sans-serif'], 
                         body: ['Nunito', 'sans-serif'],
                         code: ['"Fira Code"', 'monospace'],
                     },
@@ -41,8 +42,17 @@
             background-size: 30px 30px;
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: '"Fredoka One"', cursive;
+            font-family: '"Fredoka One"', "Nunito", sans-serif;
             letter-spacing: 0.5px;
+        }
+
+        /* --- PERBAIKAN FONT TABLET --- */
+        /* Memaksa font menjadi normal (sans-serif) khusus di layar seukuran Tablet */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            h1, h2, h3, h4, h5, h6, .font-heading {
+                font-family: 'Nunito', sans-serif !important;
+                font-weight: 900 !important;
+            }
         }
         
         .code-block {
@@ -129,6 +139,19 @@
 </head>
 <body class="text-brand-dark antialiased">
 
+    <!-- FLOATING LANGUAGE TOGGLE -->
+    <div class="fixed bottom-6 right-6 z-[100] bg-white p-2 md:p-3 rounded-2xl shadow-brutal border-4 border-brand-dark flex flex-col md:flex-row items-center gap-2 transform transition-transform hover:scale-105">
+        <span class="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-wider block text-center">Video<br class="hidden md:block">Bahasa</span>
+        <div class="flex gap-2">
+            <button onclick="setLanguage('id')" id="btn-lang-id" class="px-3 py-2 md:px-4 md:py-2 bg-brand-blue text-white rounded-xl font-bold border-2 border-brand-dark transition-all shadow-sm">
+                🇮🇩 ID
+            </button>
+            <button onclick="setLanguage('en')" id="btn-lang-en" class="px-3 py-2 md:px-4 md:py-2 bg-gray-100 text-gray-500 hover:bg-gray-200 rounded-xl font-bold border-2 border-transparent transition-all">
+                🇬🇧 EN
+            </button>
+        </div>
+    </div>
+
     <nav class="bg-white/90 backdrop-blur-md border-b-2 border-gray-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="text-2xl font-heading text-brand-indigo flex items-center gap-2">
@@ -159,12 +182,13 @@
     <main class="max-w-5xl mx-auto px-4 pb-24 space-y-12 w-full">
         
         <section id="intro" class="glass-panel p-8 md:p-12 relative overflow-hidden fade-in" style="animation-delay: 0.1s;">
-            <h2 class="text-3xl md:text-4xl text-brand-pink mb-6">1. Kenapa Programmer Suka "Bermalas-malasan"? 😴</h2>
+            <h2 class="text-3xl md:text-4xl text-brand-pink mb-6 font-heading">1. Kenapa Programmer Suka "Bermalas-malasan"? 😴</h2>
             
-            <div class="mb-8 p-4 bg-pink-50 rounded-2xl border-2 border-pink-200 shadow-sm">
-                <h4 class="font-bold text-brand-pink mb-3 flex items-center gap-2">🎬 Tonton Animasi Ini Dulu Yuk!</h4>
-                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800">
-                    <iframe src="https://www.youtube.com/embed/Bkm5hVzAIm8" title="Belajar Koding SD Bersama KOBI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+            <div class="mb-8 p-4 bg-pink-50 rounded-2xl border-2 border-pink-200 shadow-sm relative group">
+                <h4 class="font-bold text-brand-pink mb-3 flex items-center gap-2 text-lg">🎬 Tonton Animasi Ini Dulu Yuk!</h4>
+                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800 relative">
+                    <!-- Default to ID -->
+                    <iframe id="video-intro" src="https://www.youtube.com/embed/Bkm5hVzAIm8" title="Belajar Koding SD Bersama KOBI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute inset-0"></iframe>
                 </div>
             </div>
 
@@ -172,7 +196,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                 <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6 relative">
-                    <h3 class="text-xl text-red-600 mb-3 font-bold flex items-center gap-2">❌ Manual (Cara Lama)</h3>
+                    <h3 class="text-xl text-red-600 mb-3 font-bold flex items-center gap-2 font-heading">❌ Manual (Cara Lama)</h3>
                     <div class="code-block !bg-red-900">
                         <span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
                         <span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
@@ -184,7 +208,7 @@
                 </div>
                 
                 <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6 relative">
-                    <h3 class="text-xl text-green-600 mb-3 font-bold flex items-center gap-2">✅ Dengan Loop (Super Cerdas)</h3>
+                    <h3 class="text-xl text-green-600 mb-3 font-bold flex items-center gap-2 font-heading">✅ Dengan Loop (Super Cerdas)</h3>
                     <div class="code-block">
                         <span class="c-keyword">for</span> (<span class="c-keyword">let</span> i = <span class="c-number">1</span>; i <= <span class="c-number">5</span>; i++) {<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
@@ -196,7 +220,7 @@
         </section>
 
         <section id="anatomi" class="glass-panel p-8 md:p-12 relative overflow-hidden fade-in" style="animation-delay: 0.2s;">
-            <h2 class="text-3xl md:text-4xl text-brand-cyan mb-6">2. Anatomi Mesin Perulangan ⚙️</h2>
+            <h2 class="text-3xl md:text-4xl text-brand-cyan mb-6 font-heading">2. Anatomi Mesin Perulangan ⚙️</h2>
             <p class="text-lg mb-8">Setiap mesin perulangan (Loop) yang baik selalu memiliki <b>3 Komponen Rahasia</b>. Jika salah satunya hilang, mesin ini bisa meledak (atau membuat komputermu macet!).</p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -234,17 +258,18 @@
             <p class="text-gray-500 font-bold mt-4 text-lg">Waktunya membuktikan! Ganti angka di dalam kotak dan lihat apa yang terjadi.</p>
         </div>
 
+        <!-- 1. FOR LOOP AREA -->
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-blue mb-10 fade-in relative">
             <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🔄</div>
-            <h3 class="text-3xl md:text-4xl text-brand-blue mb-4 flex items-center gap-3"><span class="text-4xl">🏃‍♂️</span> FOR Loop (Si Paling Pasti)</h3>
+            <h3 class="text-3xl md:text-4xl text-brand-blue mb-4 flex items-center gap-3 font-heading"><span class="text-4xl">🏃‍♂️</span> FOR Loop (Si Paling Pasti)</h3>
             <p class="text-xl font-bold text-gray-700 mb-6 bg-blue-50 p-4 rounded-xl border-l-4 border-brand-blue">
                 Gunakan saat kamu <span class="text-brand-blue underline">SUDAH TAHU PASTI</span> berapa kali tugas harus diulang sejak awal. Semua 3 komponen (Awal, Syarat, Langkah) ditulis dalam satu baris!
             </p>
             
             <div class="mb-8 p-4 bg-blue-50 rounded-2xl border-2 border-blue-200 shadow-sm">
-                <h4 class="font-bold text-brand-blue mb-3 flex items-center gap-2">🎬 Video Penjelasan FOR Loop</h4>
-                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800">
-                    <iframe src="https://www.youtube.com/embed/vCTe-YHHj60" title="Animasi Perulangan" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+                <h4 class="font-bold text-brand-blue mb-3 flex items-center gap-2 text-lg">🎬 Penjelasan FOR Loop</h4>
+                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800 relative">
+                    <iframe id="video-for" src="https://www.youtube.com/embed/vCTe-YHHj60" title="Animasi Perulangan" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute inset-0"></iframe>
                 </div>
             </div>
 
@@ -259,21 +284,18 @@
                 <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg overflow-x-auto whitespace-nowrap">
                     <span class="c-keyword">for</span> ( <span class="c-keyword">let</span> <span class="c-var">posisi</span> = 
                     
-                    <!-- Input Start -->
                     <div class="inline-flex flex-col items-center mx-1">
                         <input type="number" id="for-start" value="0" min="0" max="10" class="brutal-input text-black bg-yellow-200 w-16 md:w-20">
                         <span class="text-[10px] text-gray-400 mt-1">Titik Awal</span>
                     </div> ; 
                     
                     <span class="c-var">posisi</span> &lt;= 
-                    <!-- Input End -->
                     <div class="inline-flex flex-col items-center mx-1">
                         <input type="number" id="for-end" value="10" min="5" max="20" class="brutal-input text-black bg-pink-200 w-16 md:w-20">
                         <span class="text-[10px] text-gray-400 mt-1">Berhenti di</span>
                     </div> ; 
                     
                     <span class="c-var">posisi</span> += 
-                    <!-- Input Step -->
                     <div class="inline-flex flex-col items-center mx-1">
                         <input type="number" id="for-step" value="2" min="1" max="5" class="brutal-input text-black bg-green-200 w-16 md:w-20">
                         <span class="text-[10px] text-gray-400 mt-1">Lompatan</span>
@@ -283,18 +305,15 @@
                 </div>
                 
                 <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
-                    <button id="btn-run-for" onclick="runInteractiveFor()" class="bg-brand-blue text-white px-8 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto flex items-center justify-center gap-2">
+                    <button id="btn-run-for" onclick="runInteractiveFor()" class="bg-brand-blue text-white px-8 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto flex items-center justify-center gap-2 hover:-translate-y-1">
                         ▶️ Jalankan Mesin FOR!
                     </button>
                     <span class="text-sm text-gray-400 italic bg-slate-700 px-3 py-1 rounded-lg">Coba ganti Lompatan menjadi 2 atau 3!</span>
                 </div>
 
-                <!-- Simulation Output -->
                 <div class="bg-slate-700 p-4 rounded-xl relative overflow-hidden">
                     <h5 class="text-xs text-gray-400 mb-2 uppercase tracking-wider font-bold">Arena Robot</h5>
-                    <!-- The Track -->
                     <div class="w-full h-12 bg-slate-800 rounded-lg relative border-b-4 border-slate-900 mb-4 flex">
-                        <!-- Markers injected via JS -->
                         <div id="for-track-markers" class="absolute w-full h-full flex justify-between px-2 text-[10px] text-slate-500 items-end pb-1"></div>
                         <div id="for-robot" class="text-3xl absolute transition-all duration-300 z-10" style="left: 0%; bottom: 2px;">🤖</div>
                     </div>
@@ -307,17 +326,18 @@
             </div>
         </section>
 
+        <!-- 2. WHILE LOOP AREA -->
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-yellow mb-10 fade-in relative">
             <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">⚔️</div>
-            <h3 class="text-3xl md:text-4xl text-brand-yellow mb-4 flex items-center gap-3"><span class="text-4xl">⚔️</span> WHILE Loop (Si Pengecek Syarat)</h3>
+            <h3 class="text-3xl md:text-4xl text-brand-yellow mb-4 flex items-center gap-3 font-heading"><span class="text-4xl">⚔️</span> WHILE Loop (Si Pengecek Syarat)</h3>
             <p class="text-xl font-bold text-gray-700 mb-6 bg-yellow-50 p-4 rounded-xl border-l-4 border-brand-yellow">
                 Gunakan saat kamu BELUM TAHU pasti butuh berapa putaran, tapi kamu tahu persis <span class="text-brand-yellow underline">SYARAT BERHENTINYA</span>. Syarat dicek di <b>AWAL</b> sebelum masuk ke dalam blok kode.
             </p>
 
             <div class="mb-8 p-4 bg-yellow-50 rounded-2xl border-2 border-yellow-200 shadow-sm">
-                <h4 class="font-bold text-brand-yellow mb-3 flex items-center gap-2">🎬 Apa Itu WHILE Loop? (Animasi Kodable)</h4>
-                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800">
-                    <iframe src="https://www.youtube.com/embed/r3Ti5Xp9W8A" title="What are Loops?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+                <h4 class="font-bold text-brand-yellow mb-3 flex items-center gap-2 text-lg">🎬 Apa Itu WHILE Loop?</h4>
+                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800 relative">
+                    <iframe id="video-while" src="https://www.youtube.com/embed/JrPi2U5zT9A?start=140" title="While Loops" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute inset-0"></iframe>
                 </div>
             </div>
 
@@ -331,9 +351,9 @@
                 
                 <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg overflow-x-auto">
                     <span class="c-keyword">let</span> <span class="c-var">hpBoss</span> = 
-                    <input type="number" id="while-hp" value="100" min="10" max="500" class="brutal-input text-black bg-red-200 w-20">;<br>
+                    <input type="number" id="while-hp" value="100" min="10" max="500" class="brutal-input text-black bg-red-200 w-20 h-8">;<br>
                     <span class="c-keyword">let</span> <span class="c-var">damage</span> = 
-                    <input type="number" id="while-dmg" value="30" min="1" max="100" class="brutal-input text-black bg-orange-200 w-20">;<br><br>
+                    <input type="number" id="while-dmg" value="30" min="1" max="100" class="brutal-input text-black bg-orange-200 w-20 h-8">;<br><br>
                     
                     <span class="c-keyword">while</span> ( <span class="c-var">hpBoss</span> > <span class="c-number">0</span> ) {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;karakter.<span class="c-function">serang</span>();<br>
@@ -348,22 +368,17 @@
                     <button onclick="resetWhile()" class="text-gray-400 underline hover:text-white px-4 py-2">Reset Boss</button>
                 </div>
 
-                <!-- Simulation Output -->
                 <div class="bg-slate-700 p-6 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-                    
-                    <!-- Boss Area -->
                     <div class="text-center w-full md:w-1/3 bg-slate-800 p-4 rounded-xl border-2 border-slate-600 relative">
                         <div id="damage-text" class="absolute top-0 right-4 text-red-400 font-bold text-2xl opacity-0 transform -translate-y-4 font-heading transition-all"></div>
                         <div id="while-monster" class="text-8xl mb-4 transition-transform filter drop-shadow-[0_0_15px_rgba(255,0,0,0.3)]">👹</div>
                         
-                        <!-- HP Bar -->
                         <div class="w-full bg-slate-900 rounded-full h-6 mx-auto overflow-hidden border-2 border-slate-700 relative">
                             <div id="while-hp-bar" class="bg-gradient-to-r from-red-600 to-red-400 h-full transition-all duration-300" style="width: 100%;"></div>
                             <span id="while-hp-text" class="absolute inset-0 flex justify-center items-center font-bold text-xs font-code drop-shadow-md">100 / 100</span>
                         </div>
                     </div>
 
-                    <!-- Log Area -->
                     <div class="flex-grow w-full">
                         <h5 class="text-xs text-gray-400 mb-1 uppercase tracking-wider font-bold">Sistem Tempur (Terminal)</h5>
                         <div id="while-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm h-40 overflow-y-auto text-yellow-300 w-full border border-slate-800">
@@ -374,6 +389,7 @@
             </div>
         </section>
 
+        <!-- WARNING BAHAYA INFINITE LOOP -->
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-red bg-red-50 fade-in">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="text-7xl md:text-9xl animate-pulse filter drop-shadow-lg">🚨</div>
@@ -393,17 +409,18 @@
             </div>
         </section>
 
+        <!-- 3. DO-WHILE LOOP AREA -->
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-purple mb-10 fade-in relative mt-10">
             <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🕹️</div>
-            <h3 class="text-3xl md:text-4xl text-brand-purple mb-4 flex items-center gap-3"><span class="text-4xl">🕹️</span> DO-WHILE (Lakukan Dulu, Tanya Belakangan!)</h3>
+            <h3 class="text-3xl md:text-4xl text-brand-purple mb-4 flex items-center gap-3 font-heading"><span class="text-4xl">🕹️</span> DO-WHILE (Lakukan Dulu!)</h3>
             <p class="text-xl font-bold text-gray-700 mb-6 bg-purple-50 p-4 rounded-xl border-l-4 border-brand-purple">
                 Sifatnya: Kerjakan tugas <span class="text-brand-purple underline font-black">MINIMAL 1 KALI</span> (Bagian DO). Setelah tugas selesai dilakukan satu kali, baru dia melihat syaratnya (Bagian WHILE). Jika syarat benar, ulangi lagi.
             </p>
 
             <div class="mb-8 p-4 bg-purple-50 rounded-2xl border-2 border-purple-200 shadow-sm">
-                <h4 class="font-bold text-brand-purple mb-3 flex items-center gap-2">🎬 Visualisasi Beda WHILE & DO-WHILE</h4>
-                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800">
-                    <iframe src="https://www.youtube.com/embed/v-K-4KuA8mQ?start=152" title="While vs Do While" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+                <h4 class="font-bold text-brand-purple mb-3 flex items-center gap-2 text-lg">🎬 Visualisasi Beda WHILE & DO-WHILE</h4>
+                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800 relative">
+                    <iframe id="video-dowhile" src="https://www.youtube.com/embed/Fc3eESOB8fY?start=200" title="While vs Do While" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute inset-0"></iframe>
                 </div>
             </div>
 
@@ -417,7 +434,7 @@
                 
                 <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg">
                     <span class="c-keyword">let</span> <span class="c-var">koin</span> = 
-                    <input type="number" id="do-koin" value="2" min="0" max="5" class="brutal-input text-black bg-purple-200 w-20">;<br><br>
+                    <input type="number" id="do-koin" value="2" min="0" max="5" class="brutal-input text-black bg-purple-200 w-20 h-8">;<br><br>
                     
                     <span class="c-keyword">do</span> {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;mesinGacha.<span class="c-function">mainSatuKali</span>();<br>
@@ -431,11 +448,9 @@
                     </button>
                 </div>
 
-                <!-- Simulation Output -->
                 <div class="bg-slate-700 p-6 rounded-xl text-center relative">
                     <h5 class="text-xs text-gray-400 mb-4 uppercase tracking-wider font-bold text-left">Pipa Pengeluaran Hadiah</h5>
                     <div class="bg-slate-800 rounded-xl p-4 min-h-[100px] border-b-4 border-slate-900 mb-4 flex justify-center items-end gap-4 overflow-hidden relative" id="gacha-tray">
-                        <!-- Items will drop here -->
                     </div>
                     
                     <div id="do-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm text-purple-300 text-left h-32 overflow-y-auto">
@@ -445,6 +460,7 @@
             </div>
         </section>
 
+        <!-- 4. NESTED LOOP (PENGAYAAN) -->
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-green mb-10 fade-in relative mt-10">
             <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🧱</div>
             <div class="inline-block bg-brand-green text-white font-bold px-4 py-1 rounded-full mb-4 shadow-sm border-2 border-brand-dark text-sm transform -rotate-2">
@@ -457,25 +473,25 @@
             </p>
 
             <div class="mb-8 p-4 bg-green-50 rounded-2xl border-2 border-green-200 shadow-sm">
-                <h4 class="font-bold text-brand-green mb-3 flex items-center gap-2">🎬 Animasi Penjelasan Nested Loop</h4>
-                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800">
-                    <iframe src="https://www.youtube.com/embed/je2hZUyq7IA" title="Nested Loops Explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full"></iframe>
+                <h4 class="font-bold text-brand-green mb-3 flex items-center gap-2 text-lg">🎬 Animasi Penjelasan Nested Loop</h4>
+                <div class="w-full aspect-video rounded-xl overflow-hidden shadow-brutal-sm border-2 border-brand-dark bg-slate-800 relative">
+                    <iframe id="video-nested" src="https://www.youtube.com/embed/_IicuBkRs8E" title="Nested Loops Explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute inset-0"></iframe>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div class="bg-slate-800 p-6 rounded-2xl text-white shadow-brutal border-4 border-brand-dark">
-                    <h4 class="text-xl text-brand-green mb-3 font-bold border-b border-slate-600 pb-2">Misi: Membangun Dinding</h4>
+                    <h4 class="text-xl text-brand-green mb-3 font-bold border-b border-slate-600 pb-2 font-heading">Misi: Membangun Dinding</h4>
                     <p class="text-sm text-gray-300 mb-4">Loop luar mengontrol <b>Baris (Tinggi)</b>. Loop dalam mengontrol <b>Batu Bata (Lebar)</b>.</p>
                     
                     <div class="flex gap-4 mb-4">
                         <div>
                             <label class="text-xs text-gray-400 block mb-1">Tinggi Tembok (Baris)</label>
-                            <input type="number" id="nest-row" value="3" min="1" max="5" class="brutal-input text-black bg-green-200 w-16">
+                            <input type="number" id="nest-row" value="3" min="1" max="5" class="brutal-input text-black bg-green-200 w-16 h-8 text-sm">
                         </div>
                         <div>
                             <label class="text-xs text-gray-400 block mb-1">Panjang Bata (Kolom)</label>
-                            <input type="number" id="nest-col" value="5" min="1" max="8" class="brutal-input text-black bg-cyan-200 w-16">
+                            <input type="number" id="nest-col" value="5" min="1" max="8" class="brutal-input text-black bg-cyan-200 w-16 h-8 text-sm">
                         </div>
                     </div>
                     
@@ -486,13 +502,13 @@
 
                 <div class="bg-gray-100 rounded-2xl p-6 border-2 border-gray-300 min-h-[200px] flex items-end justify-center overflow-hidden relative">
                     <div id="nested-wall" class="flex flex-col-reverse gap-1 items-center">
-                        <!-- Bricks injected via JS -->
                         <div class="text-gray-400 text-sm font-bold text-center w-full absolute top-1/2 -translate-y-1/2">Area Proyek Pembangunan</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 5. TANTANGAN KODING SEGITIGA BINTANG -->
         <section class="glass-panel p-8 md:p-12 border-2 border-orange-400 bg-orange-50 mb-10 fade-in relative mt-10">
             <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">⭐</div>
             <div class="inline-block bg-orange-500 text-white font-bold px-4 py-1 rounded-full mb-4 shadow-sm border-2 border-brand-dark text-sm transform rotate-2">
@@ -505,19 +521,17 @@
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Editor Bintang -->
                 <div class="bg-slate-800 p-6 rounded-2xl text-white shadow-brutal border-4 border-brand-dark relative overflow-hidden">
                     <div class="absolute -right-4 -bottom-4 text-6xl opacity-20">👩‍💻</div>
-                    <h4 class="text-xl text-orange-400 mb-3 font-bold border-b border-slate-600 pb-2">Logika Segitiga</h4>
+                    <h4 class="text-xl text-orange-400 mb-3 font-bold border-b border-slate-600 pb-2 font-heading">Logika Segitiga</h4>
                     <p class="text-sm text-gray-300 mb-4">
                         <b>Loop Luar:</b> Mengatur turun baris.<br>
-                        <b>Loop Dalam:</b> Mencetak bintang ke samping sebanyak nomor baris saat itu (Baris 1 = 1 bintang, Baris 2 = 2 bintang).
+                        <b>Loop Dalam:</b> Mencetak bintang ke samping sebanyak nomor baris saat itu.
                     </p>
                     
                     <div class="mb-6 font-code text-sm md:text-base bg-slate-900 p-4 rounded-xl border border-slate-700 overflow-x-auto whitespace-nowrap">
                         <span class="c-keyword">for</span> (<span class="c-keyword">let</span> <span class="c-var">baris</span> = <span class="c-number">1</span>; <span class="c-var">baris</span> &lt;= 
                         
-                        <!-- Input Tinggi Segitiga -->
                         <div class="inline-flex flex-col items-center mx-1 align-middle">
                             <input type="number" id="star-row" value="5" min="1" max="15" class="brutal-input text-black bg-orange-200 w-16 h-8 text-sm p-1">
                         </div>
@@ -539,31 +553,27 @@
                     <p class="text-xs text-center text-gray-400 mt-3 italic">Ubah angka dalam kotak kuning (maksimal 15 baris)</p>
                 </div>
 
-                <!-- Terminal Output -->
                 <div class="bg-black rounded-2xl p-0 border-4 border-gray-700 min-h-[350px] flex flex-col relative font-code shadow-lg">
-                    <!-- Terminal Header -->
                     <div class="w-full bg-gray-800 p-3 rounded-t-xl border-b border-gray-700 flex items-center gap-2">
                         <div class="w-3 h-3 rounded-full bg-red-500"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500"></div>
                         <span class="text-xs text-gray-400 ml-2 uppercase font-bold tracking-widest">Terminal / Console</span>
                     </div>
-                    <!-- Terminal Body -->
                     <div id="star-output" class="text-green-400 p-6 text-lg md:text-xl leading-relaxed whitespace-pre-wrap flex-grow overflow-y-auto">> Sistem Siap. Menunggu eksekusi...</div>
                 </div>
             </div>
         </section>
 
+        <!-- KUIS -->
         <section id="kuis" class="bg-white rounded-[2rem] shadow-xl overflow-hidden border-4 border-brand-dark mt-20 fade-in relative">
-            
             <div class="bg-brand-dark text-white p-8 md:p-12 text-center relative overflow-hidden">
                 <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), repeating-linear-gradient(45deg, #1e293b 25%, #0f172a 25%, #0f172a 75%, #1e293b 75%, #1e293b); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
                 <h2 class="text-4xl md:text-5xl mb-4 relative z-10 font-heading">🧠 Ujian Master Loop (HOTS)</h2>
-                <p class="text-xl font-medium opacity-90 relative z-10">15 Tantangan untuk membuktikan logikamu! Ujian ini berisi kasus-kasus logika dunia nyata.</p>
+                <p class="text-xl font-medium opacity-90 relative z-10">15 Tantangan logika dunia nyata untuk membuktikan logikamu!</p>
             </div>
             
             <div class="p-6 md:p-10 relative">
-                <!-- Quiz Progress -->
                 <div class="flex justify-between items-center mb-6 text-sm font-bold text-gray-500">
                     <span id="quiz-progress-text">Soal 1 dari 15</span>
                     <div class="w-2/3 bg-gray-200 rounded-full h-4 shadow-inner overflow-hidden border border-gray-300">
@@ -571,7 +581,6 @@
                     </div>
                 </div>
 
-                <!-- Custom Elegant Alert Banner (No popups!) -->
                 <div id="quiz-alert" class="absolute top-0 left-0 right-0 z-20 -translate-y-full transition-transform duration-300 bg-brand-red text-white p-4 shadow-lg text-center font-bold flex justify-between items-center opacity-0 pointer-events-none rounded-t-[1.5rem]">
                     <div class="flex items-center gap-2">
                         <span class="text-2xl">⚠️</span>
@@ -580,12 +589,9 @@
                     <button onclick="hideAlert()" class="bg-white/20 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-white/40 transition">&times;</button>
                 </div>
 
-                <!-- Quiz Questions Area -->
                 <div id="quiz-container" class="min-h-[350px]">
-                    <!-- Injected via JS -->
                 </div>
 
-                <!-- Controls -->
                 <div class="flex flex-col md:flex-row justify-between items-center mt-10 pt-6 border-t-2 border-dashed border-gray-200 gap-4">
                     <button id="btn-prev" onclick="navigateQuiz(-1)" class="w-full md:w-auto px-6 py-3 bg-white text-brand-dark brutal-btn rounded-xl font-bold hidden border-gray-300">
                         ⬅️ Sebelumnya
@@ -599,7 +605,6 @@
                     </button>
                 </div>
 
-                <!-- Result Area -->
                 <div id="quiz-result" class="hidden mt-4 text-center fade-in">
                     <div class="bg-gradient-to-br from-brand-indigo to-brand-purple p-8 rounded-3xl text-white shadow-lg mb-8 relative overflow-hidden">
                         <div class="absolute -top-10 -right-10 text-[10rem] opacity-20 transform rotate-12">🏆</div>
@@ -612,29 +617,83 @@
                     </div>
                     
                     <div class="text-left bg-gray-50 p-6 md:p-8 rounded-2xl border-2 border-gray-200 shadow-inner">
-                        <h4 class="text-2xl font-heading text-brand-dark mb-6 border-b-2 border-gray-300 pb-4 flex items-center gap-2">
-                            <span>📝</span> Kunci Jawaban & Pembahasan
-                        </h4>
-                        <div id="review-container" class="space-y-6">
-                            <!-- Injected via JS -->
-                        </div>
-                    </div>
+                <h4 class="text-2xl font-heading text-brand-dark mb-6 border-b-2 border-gray-300 pb-4 flex items-center gap-2">
+                    <span>📝</span> Kunci Jawaban & Pembahasan
+                </h4>
+                <div id="review-container" class="space-y-6">
                 </div>
-
             </div>
-        </section>
-    </main>
+        </div>
 
-    <footer class="bg-brand-dark text-gray-400 text-center py-10 mt-12 border-t-4 border-brand-cyan">
-        <p class="font-bold text-xl text-white mb-2 font-heading tracking-wide">© 2026 CodeKids Academy</p>
-        <p class="max-w-md mx-auto text-sm">Modul Pembelajaran Koding Interaktif Kelas 6. Didesain khusus untuk mencetak programmer cilik masa depan Indonesia.</p>
-    </footer>
+    </div>
+</section>
+</main>
 
-    <script>
-        // Utility sleep function for animations
+<footer class="bg-brand-dark text-gray-400 text-center py-10 mt-12 border-t-4 border-brand-cyan relative">
+    <p class="font-bold text-xl text-white mb-2 font-heading tracking-wide">© 2026 CodeKids Academy</p>
+    <p class="max-w-md mx-auto text-sm mb-6">Modul Pembelajaran Koding Interaktif Kelas 6. Didesain khusus untuk mencetak programmer cilik masa depan Indonesia.</p>
+    
+    <div class="mt-6 pt-6 border-t border-gray-700 max-w-lg mx-auto flex flex-col items-center gap-3">
+        <p class="text-gray-300 font-semibold">Dikembangkan oleh: <span class="text-brand-yellow font-bold text-lg">Arif Anwar Rosyidin</span></p>
+        <a href="https://instagram.com/robo_spark" target="_blank" class="inline-flex items-center gap-2 text-brand-pink hover:text-white transition-colors bg-white/10 hover:bg-brand-pink hover:shadow-brutal-sm border border-transparent hover:border-brand-dark px-5 py-2 rounded-full text-sm font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+            </svg>
+            @robo_spark
+        </a>
+    </div>
+</footer>
+
+<script>
+        // --- LOGIKA MULTI-BAHASA UNTUK VIDEO ---
+        const videoSources = {
+            intro: {
+                id: "https://www.youtube.com/embed/Bkm5hVzAIm8",
+                en: "https://www.youtube.com/embed/r3Ti5Xp9W8A" 
+            },
+            for: {
+                id: "https://www.youtube.com/embed/vCTe-YHHj60",
+                en: "https://www.youtube.com/embed/wxds6MAtUQ0" 
+            },
+            while: {
+                id: "https://www.youtube.com/embed/JrPi2U5zT9A?start=140",
+                en: "https://www.youtube.com/embed/rRTjPnVooxE" 
+            },
+            dowhile: {
+                id: "https://www.youtube.com/embed/Fc3eESOB8fY?start=200", 
+                en: "https://www.youtube.com/embed/v-K-4KuA8mQ?start=152" 
+            },
+            nested: {
+                id: "https://www.youtube.com/embed/_IicuBkRs8E", 
+                en: "https://www.youtube.com/embed/je2hZUyq7IA" 
+            }
+        };
+
+        function setLanguage(lang) {
+            // Ganti source video
+            document.getElementById('video-intro').src = videoSources.intro[lang];
+            document.getElementById('video-for').src = videoSources.for[lang];
+            document.getElementById('video-while').src = videoSources.while[lang];
+            document.getElementById('video-dowhile').src = videoSources.dowhile[lang];
+            document.getElementById('video-nested').src = videoSources.nested[lang];
+            
+            // Update UI Button
+            const btnId = document.getElementById('btn-lang-id');
+            const btnEn = document.getElementById('btn-lang-en');
+            
+            if(lang === 'id') {
+                btnId.className = "px-3 py-2 md:px-4 md:py-2 bg-brand-blue text-white rounded-xl font-bold border-2 border-brand-dark transition-all shadow-sm";
+                btnEn.className = "px-3 py-2 md:px-4 md:py-2 bg-gray-100 text-gray-500 hover:bg-gray-200 rounded-xl font-bold border-2 border-transparent transition-all";
+            } else {
+                btnEn.className = "px-3 py-2 md:px-4 md:py-2 bg-brand-blue text-white rounded-xl font-bold border-2 border-brand-dark transition-all shadow-sm";
+                btnId.className = "px-3 py-2 md:px-4 md:py-2 bg-gray-100 text-gray-500 hover:bg-gray-200 rounded-xl font-bold border-2 border-transparent transition-all";
+            }
+        }
+
+        // --- UTILITIES ---
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        /* --- LOGIKA PLAYGROUND 1: FOR LOOP --- */
+        // --- PLAYGROUND 1: FOR LOOP ---
         async function runInteractiveFor() {
             const btn = document.getElementById('btn-run-for');
             const startInput = parseInt(document.getElementById('for-start').value);
@@ -644,19 +703,21 @@
             const log = document.getElementById('for-log');
             const markersContainer = document.getElementById('for-track-markers');
             
-            // Validasi Input (Safety guardrails)
             if (isNaN(startInput) || isNaN(endInput) || isNaN(stepInput)) {
                 log.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka yang valid!</span>"; return;
             }
             if (stepInput <= 0) {
-                log.innerHTML = "<span class='text-red-400'>[ERROR] Lompatan (Step) harus lebih dari 0! Jika 0 atau minus, robot akan terjebak Infinite Loop (Mundur/Diam).</span>"; return;
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Lompatan (Step) harus lebih dari 0!</span>"; return;
             }
             if (startInput > endInput) {
-                log.innerHTML = "<span class='text-red-400'>[ERROR] Nilai Mulai harus lebih kecil/sama dengan nilai Berhenti (Karena kita melompat maju/positif).</span>"; return;
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Nilai Mulai harus lebih kecil/sama dengan nilai Berhenti.</span>"; return;
             }
+            
+            let actualEnd = endInput;
             if (endInput > 20) {
-                document.getElementById('for-end').value = 20; // Auto correct to prevent UI breaking
-                log.innerHTML = "<span class='text-yellow-400'>[INFO] Akhir disesuaikan ke maksimal 20 agar robot tidak keluar layar.</span><br>";
+                document.getElementById('for-end').value = 20;
+                actualEnd = 20;
+                log.innerHTML = "<span class='text-yellow-400'>[INFO] Akhir disesuaikan ke maksimal 20.</span><br>";
             } else {
                 log.innerHTML = "";
             }
@@ -664,9 +725,7 @@
             btn.disabled = true;
             log.innerHTML += "> Menginisialisasi sistem lompatan (FOR)...<br>";
             
-            // Setup Track Visualization
             markersContainer.innerHTML = '';
-            let actualEnd = Math.min(endInput, 20);
             for(let i=0; i<=actualEnd; i++) {
                 let div = document.createElement('div');
                 div.textContent = i;
@@ -674,24 +733,18 @@
                 markersContainer.appendChild(div);
             }
             
-            robot.style.left = `0%`; // reset posisi awal visual
+            robot.style.left = `0%`;
             await sleep(500);
 
-            // Logika FOR sebenarnya (Simulasi)
             for(let posisi = startInput; posisi <= actualEnd; posisi += stepInput) {
-                
                 log.innerHTML += `> Mengecek Syarat: posisi (${posisi}) <= ${actualEnd} ? <span class='text-green-400'>TRUE</span><br>`;
                 log.innerHTML += `  🤖 Melompat ke angka ${posisi}...<br>`;
                 log.scrollTop = log.scrollHeight;
                 
-                // Visual Animasi (Kalkulasi persentase posisi di layar)
                 let percentPos = (posisi / actualEnd) * 100;
-                // Cegah robot overflow dari track
                 if(percentPos > 95) percentPos = 95; 
                 
                 robot.style.left = `${percentPos}%`;
-                
-                // Animasi loncat kecil
                 robot.style.bottom = '15px';
                 robot.style.transform = `scale(1.2) rotate(15deg)`;
                 await sleep(300); 
@@ -703,17 +756,16 @@
                 log.scrollTop = log.scrollHeight;
             }
 
-            // Pengecekan Terakhir
             let nextPos = startInput;
             while(nextPos <= actualEnd) nextPos += stepInput;
             
-            log.innerHTML += `> Mengecek Syarat Terakhir: posisi (${nextPos}) <= ${actualEnd} ? <span class='text-red-400 font-bold'>FALSE</span>.<br>`;
+            log.innerHTML += `> Cek Syarat Akhir: posisi (${nextPos}) <= ${actualEnd} ? <span class='text-red-400 font-bold'>FALSE</span>.<br>`;
             log.innerHTML += `<span class='text-brand-cyan font-bold'>[SUKSES] FOR Loop otomatis berhenti!</span>`;
             log.scrollTop = log.scrollHeight;
             btn.disabled = false;
         }
 
-        /* --- LOGIKA PLAYGROUND 2: WHILE LOOP --- */
+        // --- PLAYGROUND 2: WHILE LOOP ---
         async function runInteractiveWhile() {
             const btn = document.getElementById('btn-run-while');
             let hpInput = parseInt(document.getElementById('while-hp').value);
@@ -724,18 +776,14 @@
             const monster = document.getElementById('while-monster');
             const dmgText = document.getElementById('damage-text');
 
-            // Validasi
             if (isNaN(hpInput) || isNaN(dmgInput)) {
-                log.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka yang valid!</span>"; return;
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka valid!</span>"; return;
             }
             if (dmgInput === 0) {
-                log.innerHTML = "<span class='text-red-500 font-bold text-lg'>🚨 PERINGATAN INFINITE LOOP!</span><br>Jika Damage = 0, HP Boss tidak akan pernah berkurang. Komputer akan menyerang selamanya dan hang! Ubah damage > 0.";
+                log.innerHTML = "<span class='text-red-500 font-bold text-lg'>🚨 PERINGATAN INFINITE LOOP!</span><br>Jika Damage = 0, HP Boss tidak akan pernah berkurang. Ubah damage > 0.";
                 return;
             }
-            if (dmgInput < 0) {
-                log.innerHTML = "<span class='text-red-400'>[ERROR] Damage tidak boleh minus (itu namanya menyembuhkan boss!).</span>"; return;
-            }
-
+            if (dmgInput < 0) return;
             if (hpInput > 1000) hpInput = 1000; 
 
             btn.disabled = true;
@@ -744,7 +792,6 @@
             let hpBoss = hpInput;
             const maxHp = hpInput;
             
-            // Reset UI
             monster.innerText = '👹';
             monster.classList.remove('grayscale', 'opacity-50');
             hpBar.style.width = '100%';
@@ -753,7 +800,6 @@
 
             await sleep(800);
 
-            // LOGIKA WHILE UTAMA
             let seranganKe = 1;
             while (hpBoss > 0) {
                 log.innerHTML += `<br><span class='text-brand-yellow'>--- Serangan ke-${seranganKe} ---</span><br>`;
@@ -762,10 +808,8 @@
                 
                 await sleep(500);
 
-                // Eksekusi Blok Kode
                 log.innerHTML += `> Karakter menyerang! Boss menerima damage ${dmgInput}.<br>`;
                 
-                // Animasi Hit
                 monster.classList.add('monster-shake');
                 dmgText.innerText = `-${dmgInput}`;
                 dmgText.classList.remove('opacity-0', '-translate-y-4');
@@ -774,7 +818,6 @@
                 hpBoss -= dmgInput;
                 if(hpBoss < 0) hpBoss = 0; 
                 
-                // Update UI Bar
                 const hpPercent = (hpBoss / maxHp) * 100;
                 hpBar.style.width = `${hpPercent}%`;
                 hpText.innerText = `${hpBoss} / ${maxHp}`;
@@ -797,7 +840,6 @@
                 await sleep(600);
             }
 
-            // Loop Selesai (Syarat False)
             log.innerHTML += `<br><span class='text-brand-yellow'>--- Cek Terakhir ---</span><br>`;
             log.innerHTML += `Cek Syarat: hpBoss (${hpBoss}) > 0 ? <span class='text-red-400 font-bold'>FALSE</span>.<br>`;
             log.innerHTML += `<span class='text-brand-yellow font-bold text-lg'>🏆 Boss Dikalahkan! Perulangan Berhenti.</span><br>`;
@@ -819,7 +861,7 @@
             document.getElementById('btn-run-while').disabled = false;
         }
 
-        /* --- LOGIKA PLAYGROUND 3: DO-WHILE LOOP --- */
+        // --- PLAYGROUND 3: DO-WHILE LOOP ---
         async function runInteractiveDoWhile() {
             const btn = document.getElementById('btn-run-do');
             let koinInput = parseInt(document.getElementById('do-koin').value);
@@ -839,14 +881,12 @@
 
             await sleep(500);
 
-            // LOGIKA DO-WHILE UTAMA
             let koin = koinInput;
             do {
                 log.innerHTML += `<br><span class='text-brand-purple font-bold'>[Bagian DO - Putaran ${putaran}]</span><br>`;
-                log.innerHTML += `> Menjalankan mesin capit (Tanpa cek syarat dulu!)...<br>`;
+                log.innerHTML += `> Menjalankan mesin capit (Tanpa cek syarat!)...<br>`;
                 log.scrollTop = log.scrollHeight;
                 
-                // Animasi drop hadiah
                 await sleep(600);
                 const randomItem = items[Math.floor(Math.random() * items.length)];
                 const itemDiv = document.createElement('div');
@@ -854,13 +894,11 @@
                 itemDiv.innerText = randomItem;
                 tray.appendChild(itemDiv);
 
-                koin--; // Kurangi koin
-                let teksKoin = koin < 0 ? 0 : koin; // visual saja agar tidak minus di log
-                log.innerHTML += `> Hadiah keluar! Koin di mesin sekarang dikurangi jadi: ${koin}.<br>`;
+                koin--; 
+                log.innerHTML += `> Hadiah keluar! Koin dikurangi, sisa: ${koin}.<br>`;
                 log.scrollTop = log.scrollHeight;
                 await sleep(800);
                 
-                // Pengecekan Syarat di Akhir
                 log.innerHTML += `<span class='text-brand-cyan font-bold'>[Bagian WHILE]</span> Cek Syarat: koin (${koin}) > 0 ? `;
                 
                 if (koin > 0) {
@@ -876,13 +914,13 @@
 
             log.innerHTML += `<br><span class='text-brand-purple font-bold'>🕹️ Mesin Otomatis Berhenti.</span>`;
             if(koinInput === 0) {
-                 log.innerHTML += `<br><span class='text-yellow-400'>*Lihat! Walau koin awalnya 0, mesin tetap bekerja 1 kali berkat sistem DO-WHILE.</span>`;
+                 log.innerHTML += `<br><span class='text-yellow-400'>*Lihat! Walau koin 0, mesin tetap bekerja 1 kali karena DO-WHILE.</span>`;
             }
             log.scrollTop = log.scrollHeight;
             btn.disabled = false;
         }
 
-        /* --- LOGIKA PLAYGROUND 4: NESTED LOOP (PENGAYAAN) --- */
+        // --- PLAYGROUND 4: NESTED LOOP ---
         async function runNestedLoop() {
             const btn = document.getElementById('btn-run-nest');
             const rowInput = parseInt(document.getElementById('nest-row').value);
@@ -891,91 +929,73 @@
             
             if(isNaN(rowInput) || isNaN(colInput) || rowInput < 1 || colInput < 1) return;
             
-            // Limit safety
             const rows = Math.min(rowInput, 5);
             const cols = Math.min(colInput, 8);
             
             btn.disabled = true;
             btn.innerText = "Sedang Membangun...";
-            wall.innerHTML = ''; // Clear area
+            wall.innerHTML = ''; 
             
-            // Logika Nested Loop
-            // Loop Luar (Baris / Tinggi)
             for (let baris = 1; baris <= rows; baris++) {
-                
-                // Buat container baris di HTML
                 const rowDiv = document.createElement('div');
                 rowDiv.className = "flex gap-1 justify-center w-full";
                 wall.appendChild(rowDiv);
                 
-                // Offset untuk pola batu bata bergantian
                 if(baris % 2 === 0) rowDiv.classList.add('ml-4'); 
 
-                // Loop Dalam (Kolom / Bata per baris)
                 for (let kolom = 1; kolom <= cols; kolom++) {
                     const brick = document.createElement('div');
                     brick.className = "w-12 h-6 bg-red-600 border border-red-800 rounded-sm shadow-sm pop-in flex items-center justify-center text-[10px] text-white/50 font-bold";
                     brick.innerText = `${baris},${kolom}`;
                     
                     rowDiv.appendChild(brick);
-                    await sleep(150); // Animasi delay pembangunan
+                    await sleep(150); 
                 }
-                await sleep(300); // Istirahat antar baris
+                await sleep(300); 
             }
             
             btn.disabled = false;
             btn.innerHTML = "🧱 Bangun Tembok Ulang!";
         }
 
-        /* --- STREAMING_CHUNK:Logika Tantangan Bintang --- */
+        // --- PLAYGROUND 5: BINTANG ---
         async function runStarChallenge() {
             const btn = document.getElementById('btn-run-star');
             const rowInput = parseInt(document.getElementById('star-row').value);
             const output = document.getElementById('star-output');
             
-            // Validasi Input
             if (isNaN(rowInput) || rowInput < 1) {
                 output.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka minimal 1!</span>";
                 return;
             }
             
-            // Batasi agar tidak membuat lag (maksimal 15 baris)
             let maxRows = Math.min(rowInput, 15); 
-            if (rowInput > 15) {
-                document.getElementById('star-row').value = 15;
-            }
+            if (rowInput > 15) document.getElementById('star-row').value = 15;
 
-            // Kunci tombol saat animasi berjalan
             btn.disabled = true;
             btn.innerText = "Menggambar Bintang...";
             output.innerHTML = `> Memproses ${maxRows} baris segitiga...<br><br>`;
             
             await sleep(500);
 
-            // Logika Menggambar Segitiga (Nested Loop)
             for (let baris = 1; baris <= maxRows; baris++) {
                 let pola = "";
-                // Loop dalam: mencetak bintang sebanyak nomor baris saat ini
                 for (let b = 1; b <= baris; b++) {
                     pola += "* ";
                 }
                 
                 output.innerHTML += `${pola}<br>`;
-                output.scrollTop = output.scrollHeight; // Auto-scroll ke bawah
-                
-                // Animasi seolah sedang mengetik baris demi baris
+                output.scrollTop = output.scrollHeight; 
                 await sleep(250); 
             }
 
             output.innerHTML += `<br><span class='text-yellow-400 font-bold'>[SUKSES] Pola Bintang Berhasil Digambar! 🏆</span>`;
             output.scrollTop = output.scrollHeight;
-            
-            // Kembalikan status tombol
             btn.disabled = false;
             btn.innerHTML = "✨ Eksekusi Kode Bintang!";
         }
 
-        /* --- STREAMING_CHUNK:Quiz Engine Data & Logic... --- */
+        // --- DATA & LOGIKA KUIS ---
         const quizData = [
             {
                 question: "1. Budi ingin membuat program komputer untuk menge-print tiket konser sebanyak tepat 100 lembar. Ia sudah tahu jumlah akhirnya sejak awal. Perulangan apa yang paling EFISIEN digunakan?",
@@ -1120,7 +1140,7 @@
                     "Error, tulisan 'while' harusnya huruf besar."
                 ],
                 correct: 2,
-                explanation: "Umur ditetapkan bernilai 10. Syaratnya selama umur < 15. Di dalam kurung kurawal {}, TIDAK ADA perintah (seperti umur++) yang membuat umur bertambah tua. Jadi selamanya nilainya 10, syarat selalu Benar (True). Akibatnya Infinite Loop!"
+                explanation: "Umur ditetapkan bernilai 10. Syaratnya selama umur < 15. Di dalam kurung {}, TIDAK ADA perintah (seperti umur++) yang membuat umur bertambah tua. Jadi selamanya nilainya 10, syarat selalu Benar (True). Akibatnya Infinite Loop!"
             }
         ];
 
@@ -1144,7 +1164,7 @@
             
             let html = `
                 <div class="fade-in">
-                    <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-6 leading-relaxed bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                    <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-6 leading-relaxed bg-blue-50 p-6 rounded-2xl border border-blue-100 font-heading">
                         ${q.question.replace(/\n/g, '<br>')}
                     </h3>
                     <div class="space-y-4">
@@ -1188,12 +1208,11 @@
 
         function selectOption(index) {
             userAnswers[currentQuestion] = index;
-            renderQuestion(); // Re-render for selection visual
+            renderQuestion();
         }
 
         function navigateQuiz(step) {
             let nextQ = currentQuestion + step;
-            // Validasi jika belum diisi tapi maksa next
             if (step === 1 && userAnswers[currentQuestion] === null) {
                 showAlert("Pilih satu jawaban dulu ya sebelum lanjut ke soal berikutnya!");
                 return;
@@ -1204,12 +1223,11 @@
             }
         }
 
-        // Elegant UI Alert instead of browser alert()
         function showAlert(msg) {
             alertText.innerText = msg;
             alertBox.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
             alertBox.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(hideAlert, 4000); // Auto hide after 4s
+            setTimeout(hideAlert, 4000); 
         }
         function hideAlert() {
             alertBox.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
@@ -1266,14 +1284,12 @@
 
             const finalScore = Math.round((score / quizData.length) * 100);
             
-            // Hide quiz UI
             quizContainer.classList.add('hidden');
             btnPrev.classList.add('hidden');
             btnNext.classList.add('hidden');
             btnSubmit.classList.add('hidden');
             document.getElementById('quiz-progress-text').parentElement.classList.add('hidden');
             
-            // Update Result UI
             document.getElementById('final-score').innerText = finalScore;
             
             let msg = "";
@@ -1302,10 +1318,12 @@
             document.getElementById('kuis').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Init
         window.onload = function() {
             renderQuestion();
         }
     </script>
 </body>
 </html>
+```
+
+Bisa langsung diperiksa. Jika Anda mengaksesnya di tablet sekarang, semua judul yang tadinya "keriting/tegak bersambung" akan kembali menjadi font normal, tebal, dan mudah dibaca oleh siswa!
