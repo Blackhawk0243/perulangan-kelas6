@@ -20,7 +20,8 @@
                         brand: {
                             blue: '#3b82f6', indigo: '#6366f1', purple: '#8b5cf6',
                             pink: '#ec4899', yellow: '#f59e0b', green: '#10b981',
-                            red: '#ef4444', dark: '#1e293b', light: '#f8fafc'
+                            red: '#ef4444', dark: '#1e293b', light: '#f8fafc',
+                            cyan: '#06b6d4'
                         }
                     },
                     boxShadow: {
@@ -60,6 +61,7 @@
         .c-string { color: #98c379; }
         .c-comment { color: #7f848e; font-style: italic; }
         .c-number { color: #d19a66; }
+        .c-var { color: #e5c07b; }
         
         .glass-panel {
             background: rgba(255, 255, 255, 0.95);
@@ -98,25 +100,30 @@
             text-align: center;
             width: 80px;
             font-family: 'Fira Code', monospace;
+            transition: all 0.2s;
+        }
+        .brutal-input:focus {
+            outline: none;
+            box-shadow: 4px 4px 0px 0px #1e293b;
+            transform: translate(-2px, -2px);
         }
 
         /* Animations */
         .monster-shake { animation: shake 0.5s; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            50% { transform: translateX(5px) rotate(5deg); }
+            75% { transform: translateX(-5px) rotate(-5deg); }
         }
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; opacity: 0; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .walk-right { animation: walkRight 0.5s forwards ease-out; }
-        @keyframes walkRight {
-            from { transform: translateX(0); }
-            to { transform: translateX(20px); }
+        .pop-in { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; transform: scale(0.5); }
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -128,33 +135,33 @@
                 🤖 CodeKids Academy
             </div>
             <div class="hidden md:flex space-x-6 font-bold text-gray-600">
-                <a href="#intro" class="hover:text-brand-indigo transition">Pemanasan (15')</a>
-                <a href="#jenis" class="hover:text-brand-purple transition">Praktik Loop (45')</a>
-                <a href="#kuis" class="hover:text-brand-pink transition">Ujian HOTS (30')</a>
+                <a href="#intro" class="hover:text-brand-indigo transition">Konsep Dasar</a>
+                <a href="#anatomi" class="hover:text-brand-blue transition">Anatomi Loop</a>
+                <a href="#jenis" class="hover:text-brand-purple transition">Praktik Koding</a>
+                <a href="#kuis" class="hover:text-brand-pink transition">Ujian Akhir</a>
             </div>
         </div>
     </nav>
 
     <header class="max-w-4xl mx-auto text-center py-16 px-4">
-        <div class="inline-block bg-brand-yellow text-white font-bold px-4 py-1 rounded-full mb-4 shadow-sm border-2 border-brand-yellow">
-            Modul Sesi 90 Menit - Full Praktik!
+        <div class="inline-block bg-brand-yellow text-brand-dark font-bold px-6 py-2 rounded-full mb-6 shadow-sm border-2 border-brand-dark shadow-brutal-sm">
+            Modul Masterclass - Full Interaktif! ✨
         </div>
-        <h1 class="text-5xl md:text-7xl text-brand-indigo mb-6 drop-shadow-sm leading-tight">Mesin Waktu & Perulangan! 🔁</h1>
+        <h1 class="text-5xl md:text-7xl text-brand-indigo mb-6 drop-shadow-sm leading-tight">Mesin Waktu &<br>Rahasia Perulangan! 🔁</h1>
         <p class="text-xl md:text-2xl text-gray-600 font-semibold mb-8">
-            Di sesi ini, kita akan membongkar rahasia bagaimana komputer bisa bekerja <b>jutaan kali</b> tanpa capek. Siapkan jari kodingmu!
+            Di modul ini, kita akan membongkar rahasia bagaimana komputer bisa bekerja <b>jutaan kali</b> tanpa merasa capek atau bosan. Siapkan jari kodingmu!
         </p>
         <a href="#intro" class="inline-block bg-brand-indigo text-white font-heading text-xl px-8 py-4 rounded-2xl brutal-btn">
-            Mulai Sesi Belajar! 🚀
+            Mulai Eksplorasi! 🚀
         </a>
     </header>
 
     <main class="max-w-5xl mx-auto px-4 pb-24 space-y-12 w-full">
         
-        <section id="intro" class="glass-panel p-8 md:p-12 relative overflow-hidden fade-in">
-            <div class="absolute top-4 right-4 bg-gray-200 text-gray-700 font-bold px-3 py-1 rounded-full text-sm">⏱️ Waktu: 15 Menit</div>
-            <h2 class="text-3xl md:text-4xl text-brand-pink mb-6">1. Kenapa Programmer Suka "Bermalas-malasan"?</h2>
+        <section id="intro" class="glass-panel p-8 md:p-12 relative overflow-hidden fade-in" style="animation-delay: 0.1s;">
+            <h2 class="text-3xl md:text-4xl text-brand-pink mb-6">1. Kenapa Programmer Suka "Bermalas-malasan"? 😴</h2>
             
-            <p class="text-lg mb-6">Programmer yang hebat adalah programmer yang tahu cara menyuruh komputer melakukan hal berulang. Coba lihat perbedaan ini. Guru menyuruhmu menulis <b>"Saya Rajin"</b> 5 kali.</p>
+            <p class="text-lg mb-6">Programmer yang hebat adalah programmer yang tahu cara menyuruh komputer melakukan hal berulang. Bayangkan kamu dihukum guru menulis <b>"Saya Rajin"</b> 5 kali di papan tulis. Mari kita lihat bedanya manusia dan komputer:</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                 <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6 relative">
@@ -166,7 +173,7 @@
                         <span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
                         <span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
                     </div>
-                    <p class="mt-4 text-sm text-red-700 font-bold">Bayangkan kalau disuruh menulis 1.000 kali! Jari bisa keriting! 😭</p>
+                    <p class="mt-4 text-sm text-red-700 font-bold">Bayangkan kalau disuruh menulis 10.000 kali! Jari bisa keriting dan pensilmu patah! 😭</p>
                 </div>
                 
                 <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6 relative">
@@ -176,136 +183,171 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">tulis</span>(<span class="c-string">"Saya Rajin"</span>);<br>
                         }<br>
                     </div>
-                    <p class="mt-4 text-sm text-green-700 font-bold">Mau 1.000 kali? Tinggal ganti angka 5 jadi 1000. Selesai dalam 1 detik! 😎</p>
+                    <p class="mt-4 text-sm text-green-700 font-bold">Mau 10.000 kali? Tinggal ganti angka 5 jadi 10000. Komputer akan menyelesaikannya dalam 1 detik! 😎</p>
                 </div>
-            </div>
-            
-            <!-- Diskusi Kelas -->
-            <div class="bg-blue-50 border-l-4 border-brand-blue p-4 rounded-r-xl mt-6">
-                <h4 class="font-bold text-brand-blue mb-1">🗣️ Diskusi Kelas:</h4>
-                <p class="text-gray-700 text-sm">Sebutkan 3 hal di kehidupan sehari-hari yang merupakan perulangan! <i>(Contoh: Jarum jam yang berputar, makan nasi sampai habis, langkah kaki saat berjalan).</i></p>
             </div>
         </section>
 
-        <h2 id="jenis" class="text-4xl text-center text-brand-dark font-heading mt-16 mb-2 drop-shadow-sm">Area Praktik Coding! ⚙️</h2>
-        <p class="text-center text-gray-500 font-bold mb-8">⏱️ Waktu Praktik: 45 Menit (Ganti Angkanya & Lihat Hasilnya!)</p>
+        <section id="anatomi" class="glass-panel p-8 md:p-12 relative overflow-hidden fade-in" style="animation-delay: 0.2s;">
+            <h2 class="text-3xl md:text-4xl text-brand-cyan mb-6">2. Anatomi Mesin Perulangan ⚙️</h2>
+            <p class="text-lg mb-8">Setiap mesin perulangan (Loop) yang baik selalu memiliki <b>3 Komponen Rahasia</b>. Jika salah satunya hilang, mesin ini bisa meledak (atau membuat komputermu macet!).</p>
 
-        <!-- FOR LOOP PRACTICAL -->
-        <section class="glass-panel p-8 md:p-12 border-2 border-brand-blue mb-10 fade-in">
-            <h3 class="text-3xl md:text-4xl text-brand-blue mb-4 flex items-center gap-3"><span class="text-4xl">🏃‍♂️</span> 1. FOR Loop (Si Paling Pasti)</h3>
-            <p class="text-xl font-bold text-gray-700 mb-6 bg-blue-50 p-4 rounded-xl">
-                Gunakan saat kamu <span class="text-brand-blue underline">SUDAH TAHU PASTI</span> berapa kali tugas harus diulang.
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Komponen 1 -->
+                <div class="bg-white border-4 border-brand-indigo rounded-2xl p-6 shadow-brutal hover:-translate-y-2 transition-transform">
+                    <div class="text-5xl mb-4">🏁</div>
+                    <h3 class="text-2xl font-heading text-brand-indigo mb-2">1. Titik Awal</h3>
+                    <p class="text-sm text-gray-600 font-semibold mb-2">(Inisialisasi)</p>
+                    <p class="text-gray-700">Komputer harus tahu dari mana dia mulai menghitung. Apakah mulai dari angka 1? Atau mulai dari angka 10?</p>
+                    <div class="mt-4 bg-gray-100 p-2 rounded font-code text-sm text-center">let i = 1</div>
+                </div>
+
+                <!-- Komponen 2 -->
+                <div class="bg-white border-4 border-brand-pink rounded-2xl p-6 shadow-brutal hover:-translate-y-2 transition-transform">
+                    <div class="text-5xl mb-4">🛑</div>
+                    <h3 class="text-2xl font-heading text-brand-pink mb-2">2. Syarat Berhenti</h3>
+                    <p class="text-sm text-gray-600 font-semibold mb-2">(Kondisi)</p>
+                    <p class="text-gray-700">Ini sangat penting! Kapan komputer harus berhenti? Selama syarat ini <b>Benar (True)</b>, loop akan terus berjalan.</p>
+                    <div class="mt-4 bg-gray-100 p-2 rounded font-code text-sm text-center">i <= 10</div>
+                </div>
+
+                <!-- Komponen 3 -->
+                <div class="bg-white border-4 border-brand-green rounded-2xl p-6 shadow-brutal hover:-translate-y-2 transition-transform">
+                    <div class="text-5xl mb-4">👣</div>
+                    <h3 class="text-2xl font-heading text-brand-green mb-2">3. Langkah</h3>
+                    <p class="text-sm text-gray-600 font-semibold mb-2">(Iterasi)</p>
+                    <p class="text-gray-700">Bagaimana cara komputer melangkah? Apakah ditambah 1 setiap putaran? Atau dikurangi 2?</p>
+                    <div class="mt-4 bg-gray-100 p-2 rounded font-code text-sm text-center">i++ (tambah 1)</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center mt-20 mb-8 fade-in">
+            <h2 id="jenis" class="text-4xl md:text-5xl text-brand-dark font-heading drop-shadow-sm inline-block border-b-4 border-brand-yellow pb-2">Area Praktik Coding! 👨‍💻</h2>
+            <p class="text-gray-500 font-bold mt-4 text-lg">Waktunya membuktikan! Ganti angka di dalam kotak dan lihat apa yang terjadi.</p>
+        </div>
+
+        <section class="glass-panel p-8 md:p-12 border-2 border-brand-blue mb-10 fade-in relative">
+            <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🔄</div>
+            <h3 class="text-3xl md:text-4xl text-brand-blue mb-4 flex items-center gap-3"><span class="text-4xl">🏃‍♂️</span> FOR Loop (Si Paling Pasti)</h3>
+            <p class="text-xl font-bold text-gray-700 mb-6 bg-blue-50 p-4 rounded-xl border-l-4 border-brand-blue">
+                Gunakan saat kamu <span class="text-brand-blue underline">SUDAH TAHU PASTI</span> berapa kali tugas harus diulang sejak awal. Semua 3 komponen (Awal, Syarat, Langkah) ditulis dalam satu baris!
             </p>
             
             <!-- Interactive Playground FOR -->
             <div class="bg-slate-800 rounded-2xl p-6 border-4 border-brand-dark shadow-brutal text-left text-white mt-8">
-                <h4 class="text-2xl text-brand-blue mb-4 font-heading border-b-2 border-slate-600 pb-2">🕹️ Misi 1: Robot Pengantar Pesanan</h4>
-                <p class="mb-4 text-gray-300">Kita ingin robot berjalan dari titik <b>Awal</b> sampai ke titik <b>Akhir</b>. Ganti angkanya dan jalankan programnya!</p>
+                <h4 class="text-2xl text-brand-blue mb-4 font-heading border-b-2 border-slate-600 pb-2 flex justify-between items-center">
+                    <span>🕹️ Misi 1: Robot Kurir Berpola</span>
+                    <span class="text-sm font-body font-normal bg-brand-blue px-3 py-1 rounded-full text-white">Bisa diubah!</span>
+                </h4>
+                <p class="mb-4 text-gray-300">Ubah nilai <b>Mulai</b>, syarat <b>Berhenti</b>, dan <b>Langkah</b> (jumlah lompatan). Buat robot melompat sesuai maumu!</p>
                 
-                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-base">
-                    <span class="c-keyword">for</span> (<span class="c-keyword">let</span> <span class="c-function">langkah</span> = 
-                    <input type="number" id="for-start" value="1" min="1" max="5" class="brutal-input text-black bg-yellow-200"> ; 
-                    <span class="c-function">langkah</span> &lt;= 
-                    <input type="number" id="for-end" value="3" min="1" max="15" class="brutal-input text-black bg-pink-200"> ; 
-                    <span class="c-function">langkah</span>++) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">robot.maju</span>(); <span class="c-comment">// Robot maju 1 langkah</span><br>
+                <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg overflow-x-auto whitespace-nowrap">
+                    <span class="c-keyword">for</span> ( <span class="c-keyword">let</span> <span class="c-var">posisi</span> = 
+                    
+                    <!-- Input Start -->
+                    <div class="inline-flex flex-col items-center mx-1">
+                        <input type="number" id="for-start" value="0" min="0" max="10" class="brutal-input text-black bg-yellow-200 w-16 md:w-20">
+                        <span class="text-[10px] text-gray-400 mt-1">Titik Awal</span>
+                    </div> ; 
+                    
+                    <span class="c-var">posisi</span> &lt;= 
+                    <!-- Input End -->
+                    <div class="inline-flex flex-col items-center mx-1">
+                        <input type="number" id="for-end" value="10" min="5" max="20" class="brutal-input text-black bg-pink-200 w-16 md:w-20">
+                        <span class="text-[10px] text-gray-400 mt-1">Berhenti di</span>
+                    </div> ; 
+                    
+                    <span class="c-var">posisi</span> += 
+                    <!-- Input Step -->
+                    <div class="inline-flex flex-col items-center mx-1">
+                        <input type="number" id="for-step" value="2" min="1" max="5" class="brutal-input text-black bg-green-200 w-16 md:w-20">
+                        <span class="text-[10px] text-gray-400 mt-1">Lompatan</span>
+                    </div> ) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">robot.melompatKe</span>(<span class="c-var">posisi</span>);<br>
                     }
                 </div>
                 
-                <div class="flex items-center gap-4 mb-6">
-                    <button id="btn-run-for" onclick="runInteractiveFor()" class="bg-brand-blue text-white px-6 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto">
-                        ▶️ Jalankan Robot!
+                <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                    <button id="btn-run-for" onclick="runInteractiveFor()" class="bg-brand-blue text-white px-8 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto flex items-center justify-center gap-2">
+                        ▶️ Jalankan Mesin FOR!
                     </button>
-                    <span class="text-sm text-gray-400 italic">*Maksimal akhir = 15 agar layar muat.</span>
+                    <span class="text-sm text-gray-400 italic bg-slate-700 px-3 py-1 rounded-lg">Coba ganti Lompatan menjadi 2 atau 3!</span>
                 </div>
 
                 <!-- Simulation Output -->
-                <div class="bg-slate-700 p-4 rounded-xl min-h-[100px] relative overflow-hidden">
-                    <div id="for-robot" class="text-4xl absolute transition-all duration-300" style="left: 0px; top: 30%;">🤖</div>
-                    <div id="for-log" class="mt-12 text-green-400 font-code text-sm">Output siap...</div>
+                <div class="bg-slate-700 p-4 rounded-xl relative overflow-hidden">
+                    <h5 class="text-xs text-gray-400 mb-2 uppercase tracking-wider font-bold">Arena Robot</h5>
+                    <!-- The Track -->
+                    <div class="w-full h-12 bg-slate-800 rounded-lg relative border-b-4 border-slate-900 mb-4 flex">
+                        <!-- Markers injected via JS -->
+                        <div id="for-track-markers" class="absolute w-full h-full flex justify-between px-2 text-[10px] text-slate-500 items-end pb-1"></div>
+                        <div id="for-robot" class="text-3xl absolute transition-all duration-300 z-10" style="left: 0%; bottom: 2px;">🤖</div>
+                    </div>
+                    
+                    <h5 class="text-xs text-gray-400 mb-1 uppercase tracking-wider font-bold">Log Terminal</h5>
+                    <div id="for-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm text-green-400 h-32 overflow-y-auto w-full">
+                        Sistem siap... Tekan tombol untuk memulai.
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- WHILE LOOP PRACTICAL -->
-        <section class="glass-panel p-8 md:p-12 border-2 border-brand-yellow mb-10 fade-in">
-            <h3 class="text-3xl md:text-4xl text-brand-yellow mb-4 flex items-center gap-3"><span class="text-4xl">⚔️</span> 2. WHILE Loop (Si Pengecek Syarat)</h3>
-            <p class="text-xl font-bold text-gray-700 mb-6 bg-yellow-50 p-4 rounded-xl">
-                Gunakan saat kamu BELUM TAHU jumlah perulangannya, tapi kamu tahu <span class="text-brand-yellow underline">SYARAT BERHENTINYA</span>. Dicek di awal.
+        <section class="glass-panel p-8 md:p-12 border-2 border-brand-yellow mb-10 fade-in relative">
+            <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">⚔️</div>
+            <h3 class="text-3xl md:text-4xl text-brand-yellow mb-4 flex items-center gap-3"><span class="text-4xl">⚔️</span> WHILE Loop (Si Pengecek Syarat)</h3>
+            <p class="text-xl font-bold text-gray-700 mb-6 bg-yellow-50 p-4 rounded-xl border-l-4 border-brand-yellow">
+                Gunakan saat kamu BELUM TAHU pasti butuh berapa putaran, tapi kamu tahu persis <span class="text-brand-yellow underline">SYARAT BERHENTINYA</span>. Syarat dicek di <b>AWAL</b> sebelum masuk ke dalam blok kode.
             </p>
 
             <!-- Interactive Playground WHILE -->
             <div class="bg-slate-800 rounded-2xl p-6 border-4 border-brand-dark shadow-brutal text-left text-white mt-8">
-                <h4 class="text-2xl text-brand-yellow mb-4 font-heading border-b-2 border-slate-600 pb-2">🕹️ Misi 2: Auto-Attack Monster</h4>
-                <p class="mb-4 text-gray-300">Buat program agar pedang menyerang otomatis SELAMA HP (Nyawa) monster masih lebih dari 0. Tentukan sendiri HP dan Damage-nya!</p>
+                <h4 class="text-2xl text-brand-yellow mb-4 font-heading border-b-2 border-slate-600 pb-2 flex justify-between items-center">
+                    <span>🕹️ Misi 2: Auto-Attack Boss!</span>
+                    <span class="text-sm font-body font-normal bg-brand-yellow text-brand-dark px-3 py-1 rounded-full">Bisa diubah!</span>
+                </h4>
+                <p class="mb-4 text-gray-300">Kita tidak tahu butuh berapa kali pukulan untuk mengalahkan Boss. Yang kita tahu: Selama HP Boss lebih besar dari 0, TERUS SERANG! Tentukan HP dan Damage-nya!</p>
                 
-                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-base">
-                    <span class="c-keyword">let</span> <span class="c-function">hpMonster</span> = <input type="number" id="while-hp" value="100" min="10" max="500" class="brutal-input text-black bg-red-200">;<br>
-                    <span class="c-keyword">let</span> <span class="c-function">damage</span> = <input type="number" id="while-dmg" value="25" min="1" max="100" class="brutal-input text-black bg-orange-200">;<br><br>
+                <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg overflow-x-auto">
+                    <span class="c-keyword">let</span> <span class="c-var">hpBoss</span> = 
+                    <input type="number" id="while-hp" value="100" min="10" max="500" class="brutal-input text-black bg-red-200 w-20">;<br>
+                    <span class="c-keyword">let</span> <span class="c-var">damage</span> = 
+                    <input type="number" id="while-dmg" value="30" min="1" max="100" class="brutal-input text-black bg-orange-200 w-20">;<br><br>
                     
-                    <span class="c-keyword">while</span> (<span class="c-function">hpMonster</span> > <span class="c-number">0</span>) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;serangMonster();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">hpMonster</span> = <span class="c-function">hpMonster</span> - <span class="c-function">damage</span>;<br>
+                    <span class="c-keyword">while</span> ( <span class="c-var">hpBoss</span> > <span class="c-number">0</span> ) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;karakter.<span class="c-function">serang</span>();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-var">hpBoss</span> = <span class="c-var">hpBoss</span> - <span class="c-var">damage</span>;<br>
                     }
                 </div>
                 
-                <div class="flex items-center gap-4 mb-6">
-                    <button id="btn-run-while" onclick="runInteractiveWhile()" class="bg-brand-yellow text-brand-dark px-6 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto">
-                        ⚔️ Mulai Serangan Auto (WHILE)
+                <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                    <button id="btn-run-while" onclick="runInteractiveWhile()" class="bg-brand-yellow text-brand-dark px-8 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto flex items-center justify-center gap-2">
+                        ⚔️ Aktifkan Auto-Attack (WHILE)
                     </button>
-                    <button onclick="resetWhile()" class="text-gray-400 underline hover:text-white">Reset Nyawa</button>
+                    <button onclick="resetWhile()" class="text-gray-400 underline hover:text-white px-4 py-2">Reset Boss</button>
                 </div>
 
                 <!-- Simulation Output -->
-                <div class="bg-slate-700 p-4 rounded-xl flex flex-col md:flex-row items-center gap-6">
-                    <div class="text-center">
-                        <div id="while-monster" class="text-7xl mb-2 transition-transform">👾</div>
-                        <div class="w-32 bg-slate-900 rounded-full h-4 mx-auto overflow-hidden">
-                            <div id="while-hp-bar" class="bg-red-500 h-full transition-all duration-300" style="width: 100%;"></div>
-                        </div>
-                        <p class="font-bold text-sm mt-1">HP: <span id="while-hp-text">100</span></p>
-                    </div>
-                    <div id="while-log" class="flex-grow bg-slate-900 p-3 rounded-lg font-code text-sm h-32 overflow-y-auto text-yellow-300 w-full">
-                        Menunggu instruksi serangan...
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- DO-WHILE LOOP PRACTICAL -->
-        <section class="glass-panel p-8 md:p-12 border-2 border-brand-purple mb-10 fade-in">
-            <h3 class="text-3xl md:text-4xl text-brand-purple mb-4 flex items-center gap-3"><span class="text-4xl">🕹️</span> 3. DO-WHILE (Lakukan Dulu!)</h3>
-            <p class="text-xl font-bold text-gray-700 mb-6 bg-purple-50 p-4 rounded-xl">
-                Kerjakan tugas <span class="text-brand-purple underline">MINIMAL 1 KALI</span> (DO). Setelah selesai, baru cek syaratnya (WHILE). Jika syaratnya benar, ulangi lagi.
-            </p>
-
-            <!-- Interactive Playground DO-WHILE -->
-            <div class="bg-slate-800 rounded-2xl p-6 border-4 border-brand-dark shadow-brutal text-left text-white mt-8">
-                <h4 class="text-2xl text-brand-purple mb-4 font-heading border-b-2 border-slate-600 pb-2">🕹️ Misi 3: Gacha Mesin Capit</h4>
-                <p class="mb-4 text-gray-300">Dalam sistem <b>Do-While</b>, kamu akan dipersilakan main dulu 1 kali! Coba ubah Koin menjadi <b>0</b>. Komputer tetap akan memberikanmu 1 kali kesempatan main gratis sebelum mengecek sisa koinmu!</p>
-                
-                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-base">
-                    <span class="c-keyword">let</span> <span class="c-function">koin</span> = <input type="number" id="do-koin" value="0" min="0" max="5" class="brutal-input text-black bg-purple-200">;<br><br>
+                <div class="bg-slate-700 p-6 rounded-xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
                     
-                    <span class="c-keyword">do</span> {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;mesinGacha.<span class="c-function">mainSatuKali</span>();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-function">koin</span> = <span class="c-function">koin</span> - <span class="c-number">1</span>;<br>
-                    } <span class="c-keyword">while</span> (<span class="c-function">koin</span> > <span class="c-number">0</span>);
-                </div>
-                
-                <div class="flex items-center gap-4 mb-6">
-                    <button id="btn-run-do" onclick="runInteractiveDoWhile()" class="bg-brand-purple text-white px-6 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto">
-                        🎁 Mulai DO-WHILE
-                    </button>
-                </div>
-
-                <!-- Simulation Output -->
-                <div class="bg-slate-700 p-4 rounded-xl text-center">
-                    <div id="do-gacha-items" class="text-5xl flex justify-center gap-2 mb-4 min-h-[50px] flex-wrap">
-                        <!-- Boneka akan muncul di sini -->
+                    <!-- Boss Area -->
+                    <div class="text-center w-full md:w-1/3 bg-slate-800 p-4 rounded-xl border-2 border-slate-600 relative">
+                        <div id="damage-text" class="absolute top-0 right-4 text-red-400 font-bold text-2xl opacity-0 transform -translate-y-4 font-heading transition-all"></div>
+                        <div id="while-monster" class="text-8xl mb-4 transition-transform filter drop-shadow-[0_0_15px_rgba(255,0,0,0.3)]">👹</div>
+                        
+                        <!-- HP Bar -->
+                        <div class="w-full bg-slate-900 rounded-full h-6 mx-auto overflow-hidden border-2 border-slate-700 relative">
+                            <div id="while-hp-bar" class="bg-gradient-to-r from-red-600 to-red-400 h-full transition-all duration-300" style="width: 100%;"></div>
+                            <span id="while-hp-text" class="absolute inset-0 flex justify-center items-center font-bold text-xs font-code drop-shadow-md">100 / 100</span>
+                        </div>
                     </div>
-                    <div id="do-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm text-purple-300 text-left">
-                        Menunggu koin masuk...
+
+                    <!-- Log Area -->
+                    <div class="flex-grow w-full">
+                        <h5 class="text-xs text-gray-400 mb-1 uppercase tracking-wider font-bold">Sistem Tempur (Terminal)</h5>
+                        <div id="while-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm h-40 overflow-y-auto text-yellow-300 w-full border border-slate-800">
+                            Menunggu perintah serangan...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -313,27 +355,115 @@
 
         <section class="glass-panel p-8 md:p-12 border-2 border-brand-red bg-red-50 fade-in">
             <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="text-8xl animate-pulse">🚨</div>
+                <div class="text-7xl md:text-9xl animate-pulse filter drop-shadow-lg">🚨</div>
                 <div>
-                    <h2 class="text-3xl text-brand-red mb-3 font-heading">Bahaya: Infinite Loop! (Loop Tanpa Henti)</h2>
-                    <p class="text-lg text-gray-800 mb-3">
-                        Bagaimana jika kamu menyuruh komputer: <br>
-                        <code>while( 1 + 1 == 2 ) { tulis("Halo!"); }</code>
+                    <h2 class="text-3xl text-brand-red mb-3 font-heading uppercase tracking-wide">Bahaya Fatal: Infinite Loop!</h2>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Musuh Terbesar Programmer 🐛</h3>
+                    <p class="text-lg text-gray-700 mb-4">
+                        Di area praktik WHILE di atas, apa yang terjadi jika <b>Damage kamu = 0</b>? HP bos tidak akan pernah habis. Artinya, syarat <code>(hpBoss > 0)</code> akan <b>selalu BENAR selamanya</b>!
                     </p>
-                    <p class="text-lg text-gray-800 font-semibold bg-white p-4 rounded-xl border border-red-200 shadow-sm">
-                        Karena 1+1 akan <b>selalu</b> 2 (selalu benar/True), komputer tidak punya alasan untuk berhenti! Komputer akan mencetak "Halo!" jutaan kali dalam sedetik sampai komputernya kepanasan dan macet (Hang). <b>Selalu pastikan syarat perulanganmu bisa menjadi SALAH (False) suatu saat nanti!</b>
-                    </p>
+                    <div class="bg-white p-5 rounded-xl border border-red-200 shadow-sm relative overflow-hidden">
+                        <div class="absolute left-0 top-0 bottom-0 w-2 bg-red-500"></div>
+                        <p class="text-gray-800 font-semibold mb-2">Aturan Emas Perulangan:</p>
+                        <p class="text-brand-red font-bold text-lg">"Selalu pastikan ada sesuatu di dalam blok kodemu yang membuat Syarat Berhenti suatu saat nanti bernilai SALAH (False)!"</p>
+                        <p class="text-sm text-gray-500 mt-2">Jika tidak, komputer akan terjebak terus melakukan hal yang sama jutaan kali per detik sampai macet (hang) dan menjadi panas!</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- QUIZ SECTION -->
-        <section id="kuis" class="bg-white rounded-[2rem] shadow-xl overflow-hidden border-4 border-brand-dark mt-16 fade-in">
+        <section class="glass-panel p-8 md:p-12 border-2 border-brand-purple mb-10 fade-in relative mt-10">
+            <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🕹️</div>
+            <h3 class="text-3xl md:text-4xl text-brand-purple mb-4 flex items-center gap-3"><span class="text-4xl">🕹️</span> DO-WHILE (Lakukan Dulu, Tanya Belakangan!)</h3>
+            <p class="text-xl font-bold text-gray-700 mb-6 bg-purple-50 p-4 rounded-xl border-l-4 border-brand-purple">
+                Sifatnya: Kerjakan tugas <span class="text-brand-purple underline font-black">MINIMAL 1 KALI</span> (Bagian DO). Setelah tugas selesai dilakukan satu kali, baru dia melihat syaratnya (Bagian WHILE). Jika syarat benar, ulangi lagi.
+            </p>
+
+            <!-- Interactive Playground DO-WHILE -->
+            <div class="bg-slate-800 rounded-2xl p-6 border-4 border-brand-dark shadow-brutal text-left text-white mt-8">
+                <h4 class="text-2xl text-brand-purple mb-4 font-heading border-b-2 border-slate-600 pb-2 flex justify-between items-center">
+                    <span>🕹️ Misi 3: Gacha Mesin Capit Bergaransi</span>
+                    <span class="text-sm font-body font-normal bg-brand-purple px-3 py-1 rounded-full text-white">Bisa diubah!</span>
+                </h4>
+                <p class="mb-4 text-gray-300">Mesin ini punya promo: <b>"Pasti Main 1 Kali Walau Koin 0!"</b>. Coba masukkan angka <b>0</b> di input koin. Lihat apa yang terjadi!</p>
+                
+                <div class="bg-slate-900 p-4 md:p-6 rounded-xl border border-slate-700 mb-6 font-code text-sm md:text-lg">
+                    <span class="c-keyword">let</span> <span class="c-var">koin</span> = 
+                    <input type="number" id="do-koin" value="2" min="0" max="5" class="brutal-input text-black bg-purple-200 w-20">;<br><br>
+                    
+                    <span class="c-keyword">do</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;mesinGacha.<span class="c-function">mainSatuKali</span>();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-var">koin</span> = <span class="c-var">koin</span> - <span class="c-number">1</span>;<br>
+                    } <span class="c-keyword">while</span> ( <span class="c-var">koin</span> > <span class="c-number">0</span> );
+                </div>
+                
+                <div class="flex items-center gap-4 mb-6">
+                    <button id="btn-run-do" onclick="runInteractiveDoWhile()" class="bg-brand-purple text-white px-8 py-3 rounded-xl font-bold brutal-btn text-lg w-full md:w-auto">
+                        🎁 Tarik Tuas Mesin (DO-WHILE)
+                    </button>
+                </div>
+
+                <!-- Simulation Output -->
+                <div class="bg-slate-700 p-6 rounded-xl text-center relative">
+                    <h5 class="text-xs text-gray-400 mb-4 uppercase tracking-wider font-bold text-left">Pipa Pengeluaran Hadiah</h5>
+                    <div class="bg-slate-800 rounded-xl p-4 min-h-[100px] border-b-4 border-slate-900 mb-4 flex justify-center items-end gap-4 overflow-hidden relative" id="gacha-tray">
+                        <!-- Items will drop here -->
+                    </div>
+                    
+                    <div id="do-log" class="bg-slate-900 p-3 rounded-lg font-code text-sm text-purple-300 text-left h-32 overflow-y-auto">
+                        Mesin menyala... Promo garansi 1x main aktif.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-panel p-8 md:p-12 border-2 border-brand-green mb-10 fade-in relative mt-10">
+            <div class="absolute -top-6 -right-6 text-8xl opacity-10 pointer-events-none">🧱</div>
+            <div class="inline-block bg-brand-green text-white font-bold px-4 py-1 rounded-full mb-4 shadow-sm border-2 border-brand-dark text-sm transform -rotate-2">
+                🌟 Materi Pengayaan Spesial
+            </div>
+            <h3 class="text-3xl md:text-4xl text-brand-green mb-4 font-heading">Perulangan di Dalam Perulangan (Nested Loop)</h3>
+            
+            <p class="text-lg text-gray-700 mb-6">
+                Pernah melihat jam dinding? Jarum menit harus berputar penuh (60 kali) HANYA untuk membuat jarum jam berpindah 1 kali. Inilah konsep <b>Nested Loop</b> (Loop bersarang). Loop kecil di dalam loop besar!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-slate-800 p-6 rounded-2xl text-white shadow-brutal border-4 border-brand-dark">
+                    <h4 class="text-xl text-brand-green mb-3 font-bold border-b border-slate-600 pb-2">Misi: Membangun Dinding</h4>
+                    <p class="text-sm text-gray-300 mb-4">Loop luar mengontrol <b>Baris (Tinggi)</b>. Loop dalam mengontrol <b>Batu Bata (Lebar)</b>.</p>
+                    
+                    <div class="flex gap-4 mb-4">
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Tinggi Tembok (Baris)</label>
+                            <input type="number" id="nest-row" value="3" min="1" max="5" class="brutal-input text-black bg-green-200 w-16">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Panjang Bata (Kolom)</label>
+                            <input type="number" id="nest-col" value="5" min="1" max="8" class="brutal-input text-black bg-cyan-200 w-16">
+                        </div>
+                    </div>
+                    
+                    <button id="btn-run-nest" onclick="runNestedLoop()" class="bg-brand-green text-white px-4 py-2 rounded-lg font-bold brutal-btn w-full mt-2">
+                        🧱 Bangun Tembok!
+                    </button>
+                </div>
+
+                <div class="bg-gray-100 rounded-2xl p-6 border-2 border-gray-300 min-h-[200px] flex items-end justify-center overflow-hidden relative">
+                    <div id="nested-wall" class="flex flex-col-reverse gap-1 items-center">
+                        <!-- Bricks injected via JS -->
+                        <div class="text-gray-400 text-sm font-bold text-center w-full absolute top-1/2 -translate-y-1/2">Area Proyek Pembangunan</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kuis" class="bg-white rounded-[2rem] shadow-xl overflow-hidden border-4 border-brand-dark mt-20 fade-in relative">
+            
             <div class="bg-brand-dark text-white p-8 md:p-12 text-center relative overflow-hidden">
-                <div class="absolute right-4 top-4 bg-brand-pink text-white font-bold px-3 py-1 rounded-full text-sm">⏱️ Waktu: 30 Menit</div>
                 <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), repeating-linear-gradient(45deg, #1e293b 25%, #0f172a 25%, #0f172a 75%, #1e293b 75%, #1e293b); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
                 <h2 class="text-4xl md:text-5xl mb-4 relative z-10 font-heading">🧠 Ujian Master Loop (HOTS)</h2>
-                <p class="text-xl font-medium opacity-90 relative z-10">Waktunya membuktikan logikamu! Ujian ini berisi kasus-kasus logika nyata.</p>
+                <p class="text-xl font-medium opacity-90 relative z-10">15 Tantangan untuk membuktikan logikamu! Ujian ini berisi kasus-kasus logika dunia nyata.</p>
             </div>
             
             <div class="p-6 md:p-10 relative">
@@ -341,14 +471,17 @@
                 <div class="flex justify-between items-center mb-6 text-sm font-bold text-gray-500">
                     <span id="quiz-progress-text">Soal 1 dari 15</span>
                     <div class="w-2/3 bg-gray-200 rounded-full h-4 shadow-inner overflow-hidden border border-gray-300">
-                        <div id="quiz-progress-bar" class="bg-brand-green h-full transition-all duration-500 rounded-full" style="width: 6.66%;"></div>
+                        <div id="quiz-progress-bar" class="bg-brand-cyan h-full transition-all duration-500 rounded-full" style="width: 6.66%;"></div>
                     </div>
                 </div>
 
-                <!-- Custom Elegant Alert Banner -->
-                <div id="quiz-alert" class="absolute top-0 left-0 right-0 z-10 -translate-y-full transition-transform duration-300 bg-brand-red text-white p-4 shadow-lg text-center font-bold flex justify-between items-center opacity-0 pointer-events-none">
-                    <span id="quiz-alert-text">Pesan error di sini!</span>
-                    <button onclick="hideAlert()" class="bg-white text-red-600 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100">&times;</button>
+                <!-- Custom Elegant Alert Banner (No popups!) -->
+                <div id="quiz-alert" class="absolute top-0 left-0 right-0 z-20 -translate-y-full transition-transform duration-300 bg-brand-red text-white p-4 shadow-lg text-center font-bold flex justify-between items-center opacity-0 pointer-events-none rounded-t-[1.5rem]">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">⚠️</span>
+                        <span id="quiz-alert-text">Pesan peringatan di sini!</span>
+                    </div>
+                    <button onclick="hideAlert()" class="bg-white/20 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-white/40 transition">&times;</button>
                 </div>
 
                 <!-- Quiz Questions Area -->
@@ -358,7 +491,7 @@
 
                 <!-- Controls -->
                 <div class="flex flex-col md:flex-row justify-between items-center mt-10 pt-6 border-t-2 border-dashed border-gray-200 gap-4">
-                    <button id="btn-prev" onclick="navigateQuiz(-1)" class="w-full md:w-auto px-6 py-3 bg-white text-brand-dark brutal-btn rounded-xl font-bold hidden">
+                    <button id="btn-prev" onclick="navigateQuiz(-1)" class="w-full md:w-auto px-6 py-3 bg-white text-brand-dark brutal-btn rounded-xl font-bold hidden border-gray-300">
                         ⬅️ Sebelumnya
                     </button>
                     <div class="flex-grow"></div>
@@ -373,16 +506,19 @@
                 <!-- Result Area -->
                 <div id="quiz-result" class="hidden mt-4 text-center fade-in">
                     <div class="bg-gradient-to-br from-brand-indigo to-brand-purple p-8 rounded-3xl text-white shadow-lg mb-8 relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 text-[10rem] opacity-20 transform rotate-12">🏆</div>
                         <h3 class="text-3xl font-heading mb-2 relative z-10">Nilai Akhirmu:</h3>
-                        <div class="text-8xl font-heading text-brand-yellow mb-4 drop-shadow-md relative z-10" id="final-score">100</div>
-                        <p class="text-2xl font-bold mb-2 relative z-10" id="final-message">Luar Biasa!</p>
-                        <button onclick="resetQuiz()" class="mt-6 px-6 py-3 bg-white text-brand-indigo rounded-full font-bold shadow-md hover:bg-gray-100 transition hover:scale-105 relative z-10">
-                            🔄 Ulangi Kuis
+                        <div class="text-8xl md:text-[8rem] font-heading text-brand-yellow mb-4 drop-shadow-md relative z-10 tracking-tighter" id="final-score">100</div>
+                        <p class="text-2xl font-bold mb-6 relative z-10" id="final-message">Luar Biasa!</p>
+                        <button onclick="resetQuiz()" class="px-8 py-4 bg-white text-brand-indigo rounded-xl font-bold shadow-brutal hover:bg-gray-100 transition relative z-10 border-4 border-brand-dark">
+                            🔄 Ulangi Latihan
                         </button>
                     </div>
                     
-                    <div class="text-left bg-gray-50 p-6 md:p-8 rounded-2xl border-2 border-gray-200">
-                        <h4 class="text-2xl font-heading text-brand-dark mb-6 border-b-2 border-gray-200 pb-4">Pembahasan Soal 📝</h4>
+                    <div class="text-left bg-gray-50 p-6 md:p-8 rounded-2xl border-2 border-gray-200 shadow-inner">
+                        <h4 class="text-2xl font-heading text-brand-dark mb-6 border-b-2 border-gray-300 pb-4 flex items-center gap-2">
+                            <span>📝</span> Kunci Jawaban & Pembahasan
+                        </h4>
                         <div id="review-container" class="space-y-6">
                             <!-- Injected via JS -->
                         </div>
@@ -393,65 +529,95 @@
         </section>
     </main>
 
-    <footer class="bg-brand-dark text-gray-400 text-center py-8 mt-12 border-t-4 border-brand-blue">
-        <p class="font-bold text-lg text-white mb-2">© 2026 CodeKids Academy</p>
-        <p>Modul Pembelajaran Koding Interaktif Kelas 6 - Durasi 90 Menit</p>
+    <footer class="bg-brand-dark text-gray-400 text-center py-10 mt-12 border-t-4 border-brand-cyan">
+        <p class="font-bold text-xl text-white mb-2 font-heading tracking-wide">© 2026 CodeKids Academy</p>
+        <p class="max-w-md mx-auto text-sm">Modul Pembelajaran Koding Interaktif Kelas 6. Didesain khusus untuk mencetak programmer cilik masa depan Indonesia.</p>
     </footer>
 
     <script>
         // Utility sleep function for animations
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        /* --- LOGIKA PLAYGROUND FOR --- */
+        /* --- LOGIKA PLAYGROUND 1: FOR LOOP --- */
         async function runInteractiveFor() {
             const btn = document.getElementById('btn-run-for');
             const startInput = parseInt(document.getElementById('for-start').value);
             const endInput = parseInt(document.getElementById('for-end').value);
+            const stepInput = parseInt(document.getElementById('for-step').value);
             const robot = document.getElementById('for-robot');
             const log = document.getElementById('for-log');
+            const markersContainer = document.getElementById('for-track-markers');
             
-            // Validasi Input
-            if (isNaN(startInput) || isNaN(endInput)) {
-                log.innerHTML = "<span class='text-red-400'>Error: Masukkan angka yang valid!</span>";
-                return;
+            // Validasi Input (Safety guardrails)
+            if (isNaN(startInput) || isNaN(endInput) || isNaN(stepInput)) {
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka yang valid!</span>"; return;
             }
-            if (endInput > 15) {
-                log.innerHTML = "<span class='text-red-400'>Error: Akhir maksimal 15 agar layar tidak jebol!</span>";
-                document.getElementById('for-end').value = 15;
-                return;
+            if (stepInput <= 0) {
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Lompatan (Step) harus lebih dari 0! Jika 0 atau minus, robot akan terjebak Infinite Loop (Mundur/Diam).</span>"; return;
             }
             if (startInput > endInput) {
-                log.innerHTML = "<span class='text-red-400'>Error: Nilai Mulai harus lebih kecil/sama dengan nilai Berhenti!</span>";
-                return;
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Nilai Mulai harus lebih kecil/sama dengan nilai Berhenti (Karena kita melompat maju/positif).</span>"; return;
+            }
+            if (endInput > 20) {
+                document.getElementById('for-end').value = 20; // Auto correct to prevent UI breaking
+                log.innerHTML = "<span class='text-yellow-400'>[INFO] Akhir disesuaikan ke maksimal 20 agar robot tidak keluar layar.</span><br>";
+            } else {
+                log.innerHTML = "";
             }
 
             btn.disabled = true;
-            log.innerHTML = "Memulai perulangan FOR...<br>";
-            robot.style.left = '0px'; // reset posisi
+            log.innerHTML += "> Menginisialisasi sistem lompatan (FOR)...<br>";
             
-            let currentPos = 0;
-            const stepPx = 40; // Pixel per step
+            // Setup Track Visualization
+            markersContainer.innerHTML = '';
+            let actualEnd = Math.min(endInput, 20);
+            for(let i=0; i<=actualEnd; i++) {
+                let div = document.createElement('div');
+                div.textContent = i;
+                div.className = (i === startInput || i === actualEnd) ? "font-bold text-brand-cyan" : "";
+                markersContainer.appendChild(div);
+            }
+            
+            robot.style.left = `0%`; // reset posisi awal visual
+            await sleep(500);
 
-            for(let i = startInput; i <= endInput; i++) {
-                // Tambah log
-                log.innerHTML += `Loop berjalan, langkah = ${i} <br>`;
-                log.scrollTop = log.scrollHeight; // Auto scroll
+            // Logika FOR sebenarnya (Simulasi)
+            for(let posisi = startInput; posisi <= actualEnd; posisi += stepInput) {
                 
-                // Animasi jalan
-                currentPos += stepPx;
-                robot.style.left = `${currentPos}px`;
-                robot.style.transform = `scale(1.2) rotate(10deg)`;
+                log.innerHTML += `> Mengecek Syarat: posisi (${posisi}) <= ${actualEnd} ? <span class='text-green-400'>TRUE</span><br>`;
+                log.innerHTML += `  🤖 Melompat ke angka ${posisi}...<br>`;
+                log.scrollTop = log.scrollHeight;
                 
-                await sleep(400); // Tahan sebentar
+                // Visual Animasi (Kalkulasi persentase posisi di layar)
+                let percentPos = (posisi / actualEnd) * 100;
+                // Cegah robot overflow dari track
+                if(percentPos > 95) percentPos = 95; 
+                
+                robot.style.left = `${percentPos}%`;
+                
+                // Animasi loncat kecil
+                robot.style.bottom = '15px';
+                robot.style.transform = `scale(1.2) rotate(15deg)`;
+                await sleep(300); 
+                robot.style.bottom = '2px';
                 robot.style.transform = `scale(1) rotate(0deg)`;
-                await sleep(400); // Tahan sebentar
+                await sleep(500); 
+                
+                log.innerHTML += `  Langkah (Iterasi): posisi ditambah ${stepInput}.<br><br>`;
+                log.scrollTop = log.scrollHeight;
             }
 
-            log.innerHTML += `<span class='text-yellow-400'>FOR Loop selesai! Syarat (${endInput + 1} <= ${endInput}) bernilai FALSE.</span>`;
+            // Pengecekan Terakhir
+            let nextPos = startInput;
+            while(nextPos <= actualEnd) nextPos += stepInput;
+            
+            log.innerHTML += `> Mengecek Syarat Terakhir: posisi (${nextPos}) <= ${actualEnd} ? <span class='text-red-400 font-bold'>FALSE</span>.<br>`;
+            log.innerHTML += `<span class='text-brand-cyan font-bold'>[SUKSES] FOR Loop otomatis berhenti!</span>`;
+            log.scrollTop = log.scrollHeight;
             btn.disabled = false;
         }
 
-        /* --- LOGIKA PLAYGROUND WHILE --- */
+        /* --- LOGIKA PLAYGROUND 2: WHILE LOOP --- */
         async function runInteractiveWhile() {
             const btn = document.getElementById('btn-run-while');
             let hpInput = parseInt(document.getElementById('while-hp').value);
@@ -460,259 +626,357 @@
             const hpBar = document.getElementById('while-hp-bar');
             const hpText = document.getElementById('while-hp-text');
             const monster = document.getElementById('while-monster');
+            const dmgText = document.getElementById('damage-text');
 
             // Validasi
-            if (isNaN(hpInput) || isNaN(dmgInput) || dmgInput <= 0) {
-                log.innerHTML = "<span class='text-red-400'>Error: Masukkan angka HP dan Damage yang valid (Damage > 0).</span>";
+            if (isNaN(hpInput) || isNaN(dmgInput)) {
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Masukkan angka yang valid!</span>"; return;
+            }
+            if (dmgInput === 0) {
+                log.innerHTML = "<span class='text-red-500 font-bold text-lg'>🚨 PERINGATAN INFINITE LOOP!</span><br>Jika Damage = 0, HP Boss tidak akan pernah berkurang. Komputer akan menyerang selamanya dan hang! Ubah damage > 0.";
                 return;
             }
-            if (hpInput > 1000) hpInput = 1000; // Limit safety
+            if (dmgInput < 0) {
+                log.innerHTML = "<span class='text-red-400'>[ERROR] Damage tidak boleh minus (itu namanya menyembuhkan boss!).</span>"; return;
+            }
+
+            if (hpInput > 1000) hpInput = 1000; 
 
             btn.disabled = true;
-            log.innerHTML = "Sistem Auto-Attack Aktif!<br>";
+            log.innerHTML = "> Sistem Auto-Attack Diaktifkan!<br>";
             
-            let currentHp = hpInput;
+            let hpBoss = hpInput;
             const maxHp = hpInput;
             
             // Reset UI
-            monster.innerText = '👾';
+            monster.innerText = '👹';
+            monster.classList.remove('grayscale', 'opacity-50');
             hpBar.style.width = '100%';
-            hpText.innerText = currentHp;
+            hpBar.className = 'bg-gradient-to-r from-green-500 to-green-400 h-full transition-all duration-300';
+            hpText.innerText = `${hpBoss} / ${maxHp}`;
 
-            await sleep(500);
+            await sleep(800);
 
             // LOGIKA WHILE UTAMA
-            while(currentHp > 0) {
-                log.innerHTML += `Cek Syarat: HP (${currentHp}) > 0 ? <span class='text-green-400'>TRUE</span>. Menyerang (-${dmgInput})!<br>`;
+            let seranganKe = 1;
+            while (hpBoss > 0) {
+                log.innerHTML += `<br><span class='text-brand-yellow'>--- Serangan ke-${seranganKe} ---</span><br>`;
+                log.innerHTML += `Cek Syarat: hpBoss (${hpBoss}) > 0 ? <span class='text-green-400'>TRUE</span>.<br>`;
                 log.scrollTop = log.scrollHeight;
-
-                // Hit animasi
-                monster.classList.add('monster-shake');
-                currentHp -= dmgInput;
-                if(currentHp < 0) currentHp = 0; // Cegah minus
                 
-                // Update Bar
-                const hpPercent = (currentHp / maxHp) * 100;
-                hpBar.style.width = `${hpPercent}%`;
-                hpText.innerText = currentHp;
-
-                await sleep(300);
-                monster.classList.remove('monster-shake');
                 await sleep(500);
+
+                // Eksekusi Blok Kode
+                log.innerHTML += `> Karakter menyerang! Boss menerima damage ${dmgInput}.<br>`;
+                
+                // Animasi Hit
+                monster.classList.add('monster-shake');
+                dmgText.innerText = `-${dmgInput}`;
+                dmgText.classList.remove('opacity-0', '-translate-y-4');
+                dmgText.classList.add('opacity-100', 'translate-y-0');
+                
+                hpBoss -= dmgInput;
+                if(hpBoss < 0) hpBoss = 0; 
+                
+                // Update UI Bar
+                const hpPercent = (hpBoss / maxHp) * 100;
+                hpBar.style.width = `${hpPercent}%`;
+                hpText.innerText = `${hpBoss} / ${maxHp}`;
+                
+                if(hpPercent < 30) {
+                    hpBar.className = 'bg-gradient-to-r from-red-600 to-red-500 h-full transition-all duration-300';
+                } else if (hpPercent < 60) {
+                    hpBar.className = 'bg-gradient-to-r from-yellow-500 to-yellow-400 h-full transition-all duration-300';
+                }
+
+                await sleep(400);
+                monster.classList.remove('monster-shake');
+                dmgText.classList.remove('opacity-100', 'translate-y-0');
+                dmgText.classList.add('opacity-0', '-translate-y-4');
+                
+                log.innerHTML += `> Sisa hpBoss = ${hpBoss}.<br>`;
+                log.scrollTop = log.scrollHeight;
+                
+                seranganKe++;
+                await sleep(600);
             }
 
-            // Loop Selesai
-            log.innerHTML += `Cek Syarat: HP (${currentHp}) > 0 ? <span class='text-red-400'>FALSE</span>. Loop Berhenti!<br>`;
+            // Loop Selesai (Syarat False)
+            log.innerHTML += `<br><span class='text-brand-yellow'>--- Cek Terakhir ---</span><br>`;
+            log.innerHTML += `Cek Syarat: hpBoss (${hpBoss}) > 0 ? <span class='text-red-400 font-bold'>FALSE</span>.<br>`;
+            log.innerHTML += `<span class='text-brand-yellow font-bold text-lg'>🏆 Boss Dikalahkan! Perulangan Berhenti.</span><br>`;
             log.scrollTop = log.scrollHeight;
-            monster.innerText = '💀';
             
+            monster.innerText = '💀';
+            monster.classList.add('grayscale', 'opacity-50');
             btn.disabled = false;
         }
 
         function resetWhile() {
-            document.getElementById('while-monster').innerText = '👾';
+            document.getElementById('while-monster').innerText = '👹';
+            document.getElementById('while-monster').classList.remove('grayscale', 'opacity-50');
             document.getElementById('while-hp-bar').style.width = '100%';
+            document.getElementById('while-hp-bar').className = 'bg-gradient-to-r from-green-500 to-green-400 h-full transition-all duration-300';
             const initialHp = document.getElementById('while-hp').value || 100;
-            document.getElementById('while-hp-text').innerText = initialHp;
-            document.getElementById('while-log').innerHTML = "Direset. Menunggu instruksi...";
+            document.getElementById('while-hp-text').innerText = `${initialHp} / ${initialHp}`;
+            document.getElementById('while-log').innerHTML = "Boss diregenerasi. Menunggu perintah serangan...";
+            document.getElementById('btn-run-while').disabled = false;
         }
 
-        /* --- LOGIKA PLAYGROUND DO-WHILE --- */
+        /* --- LOGIKA PLAYGROUND 3: DO-WHILE LOOP --- */
         async function runInteractiveDoWhile() {
             const btn = document.getElementById('btn-run-do');
-            let koin = parseInt(document.getElementById('do-koin').value);
+            let koinInput = parseInt(document.getElementById('do-koin').value);
             const log = document.getElementById('do-log');
-            const itemContainer = document.getElementById('do-gacha-items');
+            const tray = document.getElementById('gacha-tray');
             
-            if (isNaN(koin)) koin = 0;
-            if (koin > 20) koin = 20; // safety limit
+            if (isNaN(koinInput) || koinInput < 0) koinInput = 0;
+            if (koinInput > 10) koinInput = 10; 
+            document.getElementById('do-koin').value = koinInput;
 
             btn.disabled = true;
-            log.innerHTML = "Memulai DO-WHILE...<br>";
-            itemContainer.innerHTML = ''; // bersihkan item sebelumnya
+            log.innerHTML = "> Memulai Sistem DO-WHILE...<br>";
+            tray.innerHTML = ''; 
 
-            const items = ['🧸', '🚗', '🤖', '⚽', '🎸'];
+            const items = ['🧸', '🚗', '🤖', '⚽', '🎸', '🎮', '🧩'];
+            let putaran = 1;
 
             await sleep(500);
 
             // LOGIKA DO-WHILE UTAMA
+            let koin = koinInput;
             do {
-                log.innerHTML += `<span class='text-brand-purple font-bold'>[DO]</span> Bermain Gacha! <br>`;
+                log.innerHTML += `<br><span class='text-brand-purple font-bold'>[Bagian DO - Putaran ${putaran}]</span><br>`;
+                log.innerHTML += `> Menjalankan mesin capit (Tanpa cek syarat dulu!)...<br>`;
                 log.scrollTop = log.scrollHeight;
                 
-                // Animasi drop
+                // Animasi drop hadiah
+                await sleep(600);
                 const randomItem = items[Math.floor(Math.random() * items.length)];
-                const span = document.createElement('span');
-                span.innerText = randomItem;
-                span.className = 'fade-in';
-                itemContainer.appendChild(span);
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'text-5xl pop-in filter drop-shadow-md';
+                itemDiv.innerText = randomItem;
+                tray.appendChild(itemDiv);
 
                 koin--; // Kurangi koin
-                log.innerHTML += `Koin dikurangi 1. Sisa Koin: ${koin}<br>`;
-                await sleep(1000);
-                
-                log.innerHTML += `<span class='text-brand-yellow font-bold'>[WHILE]</span> Cek Syarat: Koin (${koin}) > 0 ? `;
-                
-                if(koin > 0) {
-                    log.innerHTML += `<span class='text-green-400'>TRUE</span>. Lanjut Main!<br><br>`;
-                } else {
-                    log.innerHTML += `<span class='text-red-400'>FALSE</span>. Berhenti.<br><br>`;
-                }
+                let teksKoin = koin < 0 ? 0 : koin; // visual saja agar tidak minus di log
+                log.innerHTML += `> Hadiah keluar! Koin di mesin sekarang dikurangi jadi: ${koin}.<br>`;
                 log.scrollTop = log.scrollHeight;
                 await sleep(800);
+                
+                // Pengecekan Syarat di Akhir
+                log.innerHTML += `<span class='text-brand-cyan font-bold'>[Bagian WHILE]</span> Cek Syarat: koin (${koin}) > 0 ? `;
+                
+                if (koin > 0) {
+                    log.innerHTML += `<span class='text-green-400 font-bold'>TRUE</span>.<br>  Kondisi terpenuhi, ulangi dari DO!<br>`;
+                } else {
+                    log.innerHTML += `<span class='text-red-400 font-bold'>FALSE</span>.<br>  Kondisi gagal, HENTIKAN perulangan.<br>`;
+                }
+                log.scrollTop = log.scrollHeight;
+                putaran++;
+                await sleep(1000);
 
             } while (koin > 0);
 
-            log.innerHTML += "Mesin berhenti (Sistem selesai).";
+            log.innerHTML += `<br><span class='text-brand-purple font-bold'>🕹️ Mesin Otomatis Berhenti.</span>`;
+            if(koinInput === 0) {
+                 log.innerHTML += `<br><span class='text-yellow-400'>*Lihat! Walau koin awalnya 0, mesin tetap bekerja 1 kali berkat sistem DO-WHILE.</span>`;
+            }
+            log.scrollTop = log.scrollHeight;
             btn.disabled = false;
         }
 
-        /* --- STREAMING_CHUNK:Quiz Data and Engine... --- */
+        /* --- LOGIKA PLAYGROUND 4: NESTED LOOP (PENGAYAAN) --- */
+        async function runNestedLoop() {
+            const btn = document.getElementById('btn-run-nest');
+            const rowInput = parseInt(document.getElementById('nest-row').value);
+            const colInput = parseInt(document.getElementById('nest-col').value);
+            const wall = document.getElementById('nested-wall');
+            
+            if(isNaN(rowInput) || isNaN(colInput) || rowInput < 1 || colInput < 1) return;
+            
+            // Limit safety
+            const rows = Math.min(rowInput, 5);
+            const cols = Math.min(colInput, 8);
+            
+            btn.disabled = true;
+            btn.innerText = "Sedang Membangun...";
+            wall.innerHTML = ''; // Clear area
+            
+            // Logika Nested Loop
+            // Loop Luar (Baris / Tinggi)
+            for (let baris = 1; baris <= rows; baris++) {
+                
+                // Buat container baris di HTML
+                const rowDiv = document.createElement('div');
+                rowDiv.className = "flex gap-1 justify-center w-full";
+                wall.appendChild(rowDiv);
+                
+                // Offset untuk pola batu bata bergantian
+                if(baris % 2 === 0) rowDiv.classList.add('ml-4'); 
+
+                // Loop Dalam (Kolom / Bata per baris)
+                for (let kolom = 1; kolom <= cols; kolom++) {
+                    const brick = document.createElement('div');
+                    brick.className = "w-12 h-6 bg-red-600 border border-red-800 rounded-sm shadow-sm pop-in flex items-center justify-center text-[10px] text-white/50 font-bold";
+                    brick.innerText = `${baris},${kolom}`;
+                    
+                    rowDiv.appendChild(brick);
+                    await sleep(150); // Animasi delay pembangunan
+                }
+                await sleep(300); // Istirahat antar baris
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = "🧱 Bangun Tembok Ulang!";
+        }
+
+        /* --- STREAMING_CHUNK:Quiz Engine Data & Logic... --- */
         const quizData = [
             {
-                question: "1. Andi ingin membuat program yang otomatis menge-print jadwal piket kelas sebanyak tepat 35 lembar. Logika perulangan apa yang paling cocok?",
+                question: "1. Budi ingin membuat program komputer untuk menge-print tiket konser sebanyak tepat 100 lembar. Ia sudah tahu jumlah akhirnya sejak awal. Perulangan apa yang paling EFISIEN digunakan?",
                 options: [
-                    "WHILE, karena syaratnya harus dicek.",
+                    "WHILE, karena jumlahnya banyak.",
                     "DO-WHILE, karena print harus minimal 1 kali.",
-                    "FOR, karena jumlah perulangannya (35 kali) sudah diketahui pasti.",
-                    "IF-ELSE, untuk mengecek apakah printernya nyala."
+                    "FOR, karena jumlah perulangannya (100 kali) sudah pasti.",
+                    "IF-ELSE, untuk mengecek kertas printer."
                 ],
                 correct: 2,
-                explanation: "Untuk jumlah yang sudah pasti dan diketahui sejak awal (35 kali), perulangan FOR adalah pilihan terbaik dan paling rapi."
+                explanation: "Jika kamu SUDAH TAHU pasti berapa kali tugas diulang sejak titik awal (misal: tepat 100), maka FOR adalah struktur yang paling rapi dan efisien."
             },
             {
-                question: "2. Dalam game 'Minecraft', kamu memegang tombol klik kiri untuk menambang batu. Batu itu akan hancur JIKA tingkat keretakannya sudah mencapai 100%. Sebelum itu, karaktermu akan terus memukul. Ini adalah contoh...",
-                options: ["FOR Loop", "WHILE Loop", "Variabel", "Infinite Loop"],
+                question: "2. Dalam game 'Minecraft', kamu memegang tombol klik kiri untuk menambang balok obsidian. Balok itu akan hancur JIKA tingkat keretakannya mencapai 100%. Sebelum mencapai 100%, karaktermu akan terus memukul balok. Ini menggunakan logika...",
+                options: ["FOR Loop", "WHILE Loop", "Nested Loop", "Infinite Loop"],
                 correct: 1,
-                explanation: "Kita tidak tahu butuh berapa kali pukul (tergantung jenis alat/batu), tapi kita tahu SYARAT berhentinya (keretakan mencapai 100%). Maka ini adalah WHILE."
+                explanation: "Kita tidak tahu persis butuh berapa kali pukul (tergantung jenis alat/balok), tapi kita tahu SYARAT berhentinya (keretakan = 100%). Syarat ini dicek terus menerus selama kita memukul. Ini adalah konsep WHILE."
             },
             {
-                question: "3. 'Buka bungkus permennya dulu, lalu makan. Setelah itu cek, apakah masih ada permen di kantong? Jika ya, ulangi lagi.' Kalimat ini merupakan analogi sempurna dari...",
-                options: ["Perulangan FOR", "Perulangan WHILE", "Perulangan DO-WHILE", "Bukan perulangan"],
+                question: "3. Bacalah aturan makan permen ini: 'Buka bungkus permennya, lalu makan. Setelah itu cek kantongmu, apakah MASIH ADA permen? Jika ada, ulangi lagi dari awal'. Kalimat ini adalah analogi dari...",
+                options: ["Perulangan FOR", "Perulangan WHILE", "Perulangan DO-WHILE", "Perulangan Bersarang"],
                 correct: 2,
-                explanation: "Pekerjaan dilakukan DULU (Do: Buka bungkus & makan), baru SETELAH ITU dicek syaratnya (While: masih ada permen?)."
+                explanation: "Pekerjaan dilakukan DULU setidaknya 1 kali (Do: Buka bungkus & makan 1 permen), baru SETELAH ITU dicek syaratnya di akhir (While: masih ada permen di kantong?)."
             },
             {
-                question: "4. Sebuah robot pengering lantai memiliki kode: `while (lantai == basah) { putarKipas(); }`. Jika sejak awal lantai sudah KERING, apa yang terjadi?",
+                question: "4. Sebuah robot pengering lantai diprogram dengan kode: \n`while (lantai == basah) { putarKipas(); }`\nJika robot diletakkan di atas lantai yang sejak awal SUDAH KERING, apa yang akan terjadi?",
                 options: [
-                    "Robot tetap memutar kipas 1 kali.",
-                    "Robot akan memutar kipas terus-menerus.",
+                    "Robot tetap memutar kipas 1 kali untuk berjaga-jaga.",
+                    "Robot akan memutar kipas terus-menerus (error).",
                     "Robot TIDAK AKAN memutar kipas sama sekali.",
-                    "Robot akan rusak."
+                    "Robot akan maju mencari area basah."
                 ],
                 correct: 2,
-                explanation: "Sifat utama WHILE adalah mengecek syarat di AWAL. Jika sejak awal syaratnya salah (lantai kering, bukan basah), maka perintah di dalamnya dilewati sepenuhnya."
+                explanation: "Sifat mutlak WHILE adalah mengecek syarat di AWAL sebelum masuk ke perintah. Jika sejak detik pertama syaratnya salah (lantai kering, bukan basah), maka perintah di dalamnya (putarKipas) TIDAK AKAN PERNAH dijalankan."
             },
             {
-                question: "5. Berbeda dengan soal nomor 4, jika robot menggunakan: `do { putarKipas(); } while (lantai == basah);`, lalu diletakkan di lantai yang sudah KERING. Apa yang terjadi?",
+                question: "5. Berbeda dengan soal nomor 4, jika robot tersebut diprogram ulang menggunakan DO-WHILE: \n`do { putarKipas(); } while (lantai == basah);`\nLalu diletakkan di lantai yang KERING. Apa akibatnya?",
                 options: [
                     "Robot memutar kipas 1 kali, baru berhenti.",
-                    "Robot memutar kipas terus menerus.",
+                    "Robot memutar kipas terus menerus (Infinite Loop).",
                     "Robot TIDAK memutar kipas sama sekali.",
-                    "Robot mundur."
+                    "Mesin kipas rusak."
                 ],
                 correct: 0,
-                explanation: "DO-WHILE melakukan aksi MINIMAL 1 KALI (Do). Setelah kipas berputar 1 kali, baru dia ngecek (Oh ternyata lantai sudah kering), lalu dia berhenti."
+                explanation: "Sistem DO-WHILE selalu mengeksekusi blok 'DO' secara buta minimal 1 KALI. Jadi kipas berputar 1 kali. Setelah itu dia baru mencek syarat (Oh lantai sudah kering), lalu dia berhenti."
             },
             {
-                question: "6. Dodi menulis program: `for (let i = 10; i > 0; i--) { cetak(i); }`. Apa hasil yang akan muncul di layar komputer?",
+                question: "6. Dodi menulis kode hitung mundur peluncuran roket: \n`for (let detik = 10; detik > 0; detik--) { cetak(detik); }`\nApa hasil yang akan muncul di layar?",
                 options: [
                     "Angka 1, 2, 3, sampai 10.",
                     "Angka 10, 9, 8, 7, 6, 5, 4, 3, 2, 1.",
                     "Angka 10 secara terus menerus (Infinite Loop).",
-                    "Tidak ada yang muncul."
+                    "Tidak ada yang muncul karena error."
                 ],
                 correct: 1,
-                explanation: "Titik awalnya 10, syaratnya selama > 0, dan langkahnya i-- (dikurangi 1). Ini adalah logika hitung mundur."
+                explanation: "Perhatikan ketiga komponennya: Mulai dari 10. Syaratnya selama lebih besar dari 0. Langkahnya: detik-- (artinya detik dikurangi 1). Hasilnya adalah hitung mundur 10 sampai 1."
             },
             {
-                question: "7. Sinta membuat alarm HP. Ia menulis syarat: `while (1 + 1 == 2) { bunyikanAlarm(); }`. Apa kesalahan fatal yang dibuat Sinta?",
+                question: "7. Sinta membuat alarm Anti-Maling di kamarnya. Ia menulis syarat: \n`while ( 1 + 1 == 2 ) { bunyikanSirine(); }`\nApa kesalahan paling FATAL yang dibuat Sinta?",
                 options: [
-                    "Alarmnya suaranya akan kecil.",
-                    "Ia menciptakan Infinite Loop, alarm akan bunyi selamanya karena 1+1 selalu sama dengan 2.",
-                    "Kodenya tidak bisa dijalankan.",
-                    "Ia seharusnya menggunakan FOR."
+                    "Suara sirine akan terlalu pelan.",
+                    "Ia menciptakan Infinite Loop, sirine akan bunyi selamanya hingga listrik dicabut.",
+                    "Kodenya tidak bisa dijalankan sama sekali.",
+                    "Seharusnya menggunakan DO-WHILE."
                 ],
                 correct: 1,
-                explanation: "Syarat (1+1==2) adalah kebenaran mutlak yang tidak akan pernah berubah menjadi Salah (False). Akibatnya loop tidak punya titik berhenti (Infinite Loop)."
+                explanation: "Syarat (1+1==2) adalah fakta mutlak yang nilainya selalu True (Benar). Jika syarat selalu benar, perulangan tidak punya jalan keluar (Infinite Loop). Program akan hang."
             },
             {
-                question: "8. Dalam ATM, jika kamu salah memasukkan PIN, mesin akan meminta PIN lagi. Maksimal percobaan 3 kali. Setelah 3 kali, kartu diblokir. Konsep apa saja yang bergabung di sini?",
+                question: "8. Dalam sistem ATM, jika kamu salah memasukkan PIN, mesin akan meminta PIN lagi. Maksimal percobaan 3 kali. Setelah 3 kali, kartu diblokir. Konsep apa saja yang bergabung membangun sistem ini?",
                 options: [
                     "Hanya FOR Loop",
-                    "Perulangan (Loop) yang digabung dengan Pengecekan Syarat (If-Else)",
+                    "Perulangan (Loop) yang digabungkan dengan Percabangan (If-Else)",
                     "Hanya DO-WHILE Loop",
-                    "Bukan coding, itu sistem bank"
+                    "Tidak menggunakan Loop sama sekali"
                 ],
                 correct: 1,
-                explanation: "Ada loop untuk mengulang permintaan PIN (maksimal 3), dan di dalamnya ada pengecekan IF-ELSE (Jika benar masuk, Jika salah hitung percobaan)."
+                explanation: "Mesin menggunakan Loop untuk mengulang perintah 'Masukkan PIN' (sampai batas 3). Di dalam loop tersebut, ada If-Else (Jika PIN Benar -> Masuk; Jika Salah -> Kurangi sisa percobaan)."
             },
             {
-                question: "9. Analisis kode ini: `for (langkah = 0; langkah < 10; langkah = langkah + 2)`. Jika robot berjalan maju, pada hitungan ke berapa saja ia melangkah?",
+                question: "9. Analisis kode FOR ini: \n`for (langkah = 0; langkah <= 10; langkah = langkah + 2)`\nPada hitungan ke berapa sajakah robot melangkah?",
                 options: [
-                    "0, 1, 2, 3, 4, 5, 6, 7, 8, 9",
+                    "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
                     "1, 3, 5, 7, 9",
-                    "0, 2, 4, 6, 8",
+                    "0, 2, 4, 6, 8, 10",
                     "Hanya 2 dan 10"
                 ],
                 correct: 2,
-                explanation: "Mulai dari 0. Lalu langkah ditambah 2 (0, 2, 4, 6, 8). Saat langkah jadi 10, syarat (10 < 10) bernilai SALAH, jadi loop berhenti."
+                explanation: "Titik awal adalah 0. Iterasi/langkahnya adalah melompat (+2). Jadi nilainya berurutan: 0, lalu 2, lalu 4, 6, 8, dan terakhir 10."
             },
             {
-                question: "10. Memasukkan koin ke mesin Arcade Ding-Dong (Game Center). Selama credit koin masih ada, kamu bisa memilih game. Ini cocok diprogram menggunakan...",
-                options: ["FOR", "WHILE", "IF", "START-STOP"],
+                question: "10. Memasukkan koin ke mesin Ding-Dong Arcade. Selama mesin mendeteksi sisa Credit Koin > 0, kamu bisa menekan tombol Start untuk memilih game. Sistem deteksi koin ini paling cocok diprogram dengan...",
+                options: ["FOR", "WHILE", "NESTED LOOP", "START-STOP"],
                 correct: 1,
-                explanation: "Kita tidak tahu berapa lama user akan bermain. Pokoknya SELAMA (While) koin > 0, mesin menyala."
+                explanation: "Mesin Arcade tidak tahu berapa lama kamu akan diam/berpikir memilih game. Pokoknya SELAMA (While) koin masih ada, mesin tetap berada di layar pilihan game."
             },
             {
-                question: "11. Di game balapan mobil, total lap adalah 5. Pemain saat ini ada di putaran ke-2. Sistem permainan (Game Engine) selalu mengecek: 'Apakah putaran saat ini < total putaran?'. Jika ya, game lanjut. Logika ini menggunakan...",
-                options: ["FOR", "WHILE", "Infinite Loop", "Sistem Rem"],
+                question: "11. Di game balap Mario Kart, total putaran (lap) adalah 3. Pemain saat ini ada di putaran ke-2. Game Engine mengecek: 'Apakah putaran saat ini <= 3?'. Jika ya, perlombaan berlanjut. Logika ini sejatinya menjalankan prinsip...",
+                options: ["FOR Loop", "DO-WHILE Loop", "Infinite Loop", "Nested Loop"],
                 correct: 0,
-                explanation: "Bisa diprogram dengan FOR karena jumlah awal dan akhirnya pasti (Lap 1 sampai Lap 5)."
+                explanation: "Karena jumlah iterasi (awal dan akhir balapan) sudah sangat pasti dan diketahui dari awal balapan (Lap 1 sampai 3), ini adalah struktur dasar sebuah FOR Loop."
             },
             {
-                question: "12. Mana dari pernyataan berikut yang merupakan CARA MENCEGAH Infinite Loop pada While?",
+                question: "12. Apa cara paling BENAR untuk mencegah terjadinya *Infinite Loop* (Looping tanpa henti) pada pemrograman WHILE?",
                 options: [
-                    "Jangan pernah menggunakan variabel angka.",
-                    "Pastikan di dalam blok While, ada perintah yang MENGUBAH variabel syarat, agar suatu saat bisa bernilai False.",
-                    "Ubah tulisan While menjadi warna merah.",
-                    "Cabut colokan listrik komputer."
+                    "Jangan pernah menggunakan angka di atas 1000.",
+                    "Pastikan di dalam blok While, ada perintah yang MENGUBAH variabel yang dicek, sehingga suatu saat syaratnya bisa bernilai False.",
+                    "Ubah tulisan awal program menjadi huruf besar semua.",
+                    "Selalu tambahkan perintah 'STOP' di akhir kode."
                 ],
                 correct: 1,
-                explanation: "Agar tidak infinite, nilai yang dicek dalam syarat harus bisa berubah (misal: HP monster yang awalnya 100 dikurangi terus sampai jadi 0)."
+                explanation: "Agar tidak infinite, nilai variabel yang jadi syarat (misal: hpMonster) harus diubah di dalam loop (misal: dikurangi damage). Suatu saat HP akan < 0 (Syarat menjadi False) dan loop berhenti."
             },
             {
-                question: "13. Kamu punya tumpukan baju yang harus disetrika. Tinggi tumpukan tidak pasti. Perintah yang tepat untuk menyetrika adalah...",
+                question: "13. Kamu punya sekeranjang besar cucian baju yang harus disetrika. Tingginya tidak pasti, bajunya bermacam-macam. Perintah logika yang paling tepat untuk menyetrika adalah...",
                 options: [
-                    "FOR (baju 1 sampai baju 10) { setrika(); }",
+                    "FOR (baju 1 sampai baju 100) { setrika(); }",
                     "WHILE (masih ada baju di keranjang) { ambilBaju(); setrika(); }",
                     "DO { istirahat(); } WHILE (capek);",
-                    "Semua benar"
+                    "FOR (langkah = 2) { setrika(); }"
                 ],
                 correct: 1,
-                explanation: "Karena jumlah baju tidak pasti, kita gunakan WHILE. Kerjakan terus selama syarat (masih ada baju) terpenuhi."
+                explanation: "Kita tidak tahu persis ada berapa lembar baju (bisa 10, bisa 50). Yang kita tahu adalah syarat berhentinya: Keranjang kosong. Maka, kerjakan (setrika) SELAMA (While) masih ada baju."
             },
             {
-                question: "14. Apa yang membedakan 'Titik Awal' (Inisialisasi) pada perulangan FOR dibandingkan dengan WHILE?",
+                question: "14. Konsep 'Nested Loop' (Loop bersarang / Loop di dalam Loop) sangat sering dipakai di dunia pemrograman komputer untuk membuat...",
                 options: [
-                    "Tidak ada bedanya.",
-                    "FOR tidak punya Titik Awal.",
-                    "Pada FOR, Titik Awal ditulis sekalian di dalam kurung (). Pada WHILE, Titik Awal ditulis di luar/sebelum tulisan WHILE.",
-                    "WHILE hanya untuk huruf, FOR untuk angka."
+                    "Papan Catur (Grid Kolom dan Baris)",
+                    "Menyalakan komputer",
+                    "Memutar musik MP3",
+                    "Mengeprint 1 halaman"
                 ],
-                correct: 2,
-                explanation: "Sintaks dasar: `for(let i=0; ...)` variabel di dalam. Sedangkan While: `let i=0; while(...)` variabel di luar."
+                correct: 0,
+                explanation: "Nested loop terdiri dari loop luar dan dalam. Ini sangat sempurna untuk membuat koordinat 2 dimensi seperti Tabel, Grid, Titik Koordinat Game (X,Y), dan Papan Catur."
             },
             {
-                question: "15. (Soal Tantangan) Jika kode ini dijalankan: \n`let x = 5;` \n`while (x > 0) { cetak(x); }` \nMenurut analisismu, apa yang akan terjadi?",
+                question: "15. (Soal Analisa Kritis) Perhatikan potongan kode berikut: \n`let umur = 10;` \n`while (umur < 15) { cetak('Kamu belum cukup umur'); }` \nMenurut analisismu, apa cacat logika dari kode di atas?",
                 options: [
-                    "Mencetak angka 5, 4, 3, 2, 1.",
-                    "Mencetak angka 5, lalu berhenti.",
-                    "Terjadi INFINITE LOOP yang mencetak angka 5 tanpa henti.",
-                    "Error, tidak bisa jalan."
+                    "Teks 'Kamu belum cukup umur' terlalu panjang.",
+                    "Kode berjalan normal dan mencetak pesan 5 kali.",
+                    "Akan terjadi INFINITE LOOP karena variabel 'umur' tidak pernah ditambah (di-update) di dalam loop.",
+                    "Error, tulisan 'while' harusnya huruf besar."
                 ],
                 correct: 2,
-                explanation: "Ini adalah jebakan Infinite Loop. Nilai x awalnya 5 (5>0 benar). Di dalam loop, TIDAK ADA perintah untuk mengubah/mengurangi nilai x (seperti x--). Jadi x selamanya 5, syarat selalu benar."
+                explanation: "Umur ditetapkan bernilai 10. Syaratnya selama umur < 15. Di dalam kurung kurawal {}, TIDAK ADA perintah (seperti umur++) yang membuat umur bertambah tua. Jadi selamanya nilainya 10, syarat selalu Benar (True). Akibatnya Infinite Loop!"
             }
         ];
 
@@ -736,7 +1000,7 @@
             
             let html = `
                 <div class="fade-in">
-                    <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-6 leading-relaxed">
+                    <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-6 leading-relaxed bg-blue-50 p-6 rounded-2xl border border-blue-100">
                         ${q.question.replace(/\n/g, '<br>')}
                     </h3>
                     <div class="space-y-4">
@@ -744,14 +1008,18 @@
             
             const letters = ['A', 'B', 'C', 'D'];
             q.options.forEach((opt, index) => {
-                const isSelected = userAnswers[currentQuestion] === index ? 'bg-brand-blue text-white border-brand-blue' : 'bg-white border-gray-300 hover:border-brand-blue hover:bg-blue-50';
-                const textSelected = userAnswers[currentQuestion] === index ? 'text-white' : 'text-gray-700';
+                const isSelected = userAnswers[currentQuestion] === index;
+                const baseClass = "w-full text-left p-4 rounded-xl text-lg font-semibold transition-all border-2 flex items-start gap-4 hover:-translate-y-1 hover:shadow-md ";
+                const selectedClass = isSelected 
+                    ? "bg-brand-blue text-white border-brand-blue shadow-brutal-sm translate-y-[-2px]" 
+                    : "bg-white border-gray-300 hover:border-brand-blue text-gray-700";
+                
+                const badgeClass = isSelected ? "bg-white text-brand-blue" : "bg-gray-200 text-gray-800";
                 
                 html += `
-                    <button onclick="selectOption(${index})" id="opt-${index}" 
-                        class="w-full text-left p-4 rounded-xl text-lg font-semibold transition-all border-2 flex items-start gap-4 ${isSelected}">
-                        <span class="inline-block bg-gray-200 px-3 py-1 rounded-lg font-bold shrink-0 text-gray-800">${letters[index]}</span>
-                        <span class="mt-1 ${textSelected}">${opt}</span>
+                    <button onclick="selectOption(${index})" id="opt-${index}" class="${baseClass} ${selectedClass}">
+                        <span class="inline-block px-4 py-1.5 rounded-lg font-bold shrink-0 shadow-sm transition-colors ${badgeClass}">${letters[index]}</span>
+                        <span class="mt-1 leading-relaxed">${opt}</span>
                     </button>
                 `;
             });
@@ -776,13 +1044,14 @@
 
         function selectOption(index) {
             userAnswers[currentQuestion] = index;
-            renderQuestion();
+            renderQuestion(); // Re-render for selection visual
         }
 
         function navigateQuiz(step) {
             let nextQ = currentQuestion + step;
+            // Validasi jika belum diisi tapi maksa next
             if (step === 1 && userAnswers[currentQuestion] === null) {
-                showAlert("⚠️ Pilih satu jawaban dulu ya sebelum lanjut!");
+                showAlert("Pilih satu jawaban dulu ya sebelum lanjut ke soal berikutnya!");
                 return;
             }
             if (nextQ >= 0 && nextQ < quizData.length) {
@@ -806,7 +1075,7 @@
         function submitQuiz() {
             let unanswered = userAnswers.indexOf(null);
             if (unanswered !== -1) {
-                showAlert(`⚠️ Soal nomor ${unanswered + 1} belum dijawab! Mundur dulu yuk.`);
+                showAlert(`Soal nomor ${unanswered + 1} belum dijawab! Yuk mundur dan isi dulu.`);
                 return;
             }
 
@@ -823,26 +1092,28 @@
                 const letterCorrect = String.fromCharCode(65 + quizData[index].correct);
 
                 reviewHTML += `
-                    <div class="p-5 rounded-xl border-2 ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'} relative">
-                        <div class="absolute -right-2 -top-4 text-4xl bg-white rounded-full p-1">${isCorrect ? '✅' : '❌'}</div>
-                        <p class="font-bold text-lg mb-3 text-brand-dark">${quizData[index].question.replace(/\n/g, '<br>')}</p>
+                    <div class="p-6 rounded-2xl border-2 ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'} relative mb-6 shadow-sm">
+                        <div class="absolute -right-3 -top-4 text-5xl bg-white rounded-full p-1 shadow-sm border border-gray-100">${isCorrect ? '✅' : '❌'}</div>
+                        <p class="font-bold text-lg mb-4 text-brand-dark bg-white/50 p-4 rounded-xl">${quizData[index].question.replace(/\n/g, '<br>')}</p>
                         
-                        <div class="mb-3 p-3 rounded-lg ${isCorrect ? 'bg-green-100' : 'bg-red-100'}">
-                            <span class="font-bold text-sm text-gray-600">Jawabanmu:</span><br>
-                            <span class="font-semibold ${isCorrect ? 'text-green-800' : 'text-red-800'}">
-                                ${letterAns}. ${quizData[index].options[ans]}
-                            </span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="p-4 rounded-xl ${isCorrect ? 'bg-green-100 border border-green-200' : 'bg-red-100 border border-red-200'}">
+                                <span class="font-bold text-xs uppercase tracking-wider text-gray-500 mb-1 block">Jawabanmu:</span>
+                                <span class="font-bold ${isCorrect ? 'text-green-800' : 'text-red-800'}">
+                                    [${letterAns}] ${quizData[index].options[ans]}
+                                </span>
+                            </div>
+                            
+                            ${!isCorrect ? `
+                            <div class="p-4 bg-green-100 rounded-xl border border-green-200">
+                                <span class="font-bold text-xs uppercase tracking-wider text-green-700 mb-1 block">Kunci Jawaban Benar:</span>
+                                <span class="font-bold text-green-900">[${letterCorrect}] ${quizData[index].options[quizData[index].correct]}</span>
+                            </div>
+                            ` : '<div></div>'}
                         </div>
                         
-                        ${!isCorrect ? `
-                        <div class="mb-3 p-3 bg-green-100 rounded-lg border border-green-200">
-                            <span class="font-bold text-sm text-green-700">Jawaban yang Benar:</span><br>
-                            <span class="font-semibold text-green-900">${letterCorrect}. ${quizData[index].options[quizData[index].correct]}</span>
-                        </div>
-                        ` : ''}
-                        
-                        <div class="mt-4 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                            <span class="font-bold text-brand-blue">💡 Pembahasan:</span><br>
+                        <div class="bg-white p-5 rounded-xl border-l-4 border-brand-cyan shadow-sm">
+                            <span class="font-bold text-brand-cyan uppercase text-xs tracking-wider mb-2 block flex items-center gap-2"><span>💡</span> Pembahasan Logika:</span>
                             <span class="text-gray-700 text-sm leading-relaxed">${quizData[index].explanation}</span>
                         </div>
                     </div>
@@ -851,19 +1122,21 @@
 
             const finalScore = Math.round((score / quizData.length) * 100);
             
+            // Hide quiz UI
             quizContainer.classList.add('hidden');
             btnPrev.classList.add('hidden');
             btnNext.classList.add('hidden');
             btnSubmit.classList.add('hidden');
             document.getElementById('quiz-progress-text').parentElement.classList.add('hidden');
             
+            // Update Result UI
             document.getElementById('final-score').innerText = finalScore;
             
             let msg = "";
-            if (finalScore === 100) msg = "Sempurna! Kamu adalah Master Logika Komputer! 🏆🤖";
-            else if (finalScore >= 80) msg = "Hebat Sekali! Kamu sangat paham cara kerja loop! 🚀";
-            else if (finalScore >= 60) msg = "Kerja Bagus! Tinggal berlatih sedikit lagi untuk jadi Pro! 💪";
-            else msg = "Jangan Menyerah! Koding butuh latihan, yuk baca materi dan coba lagi! 📚";
+            if (finalScore === 100) msg = "Level Legend! Sempurna! 👑🤖";
+            else if (finalScore >= 80) msg = "Level Epic! Logikamu sangat tajam! 🚀";
+            else if (finalScore >= 60) msg = "Level Elite! Sedikit lagi mencapai pro! 💪";
+            else msg = "Level Pemula! Jangan menyerah, baca lagi ya! 📚";
             
             document.getElementById('final-message').innerText = msg;
             document.getElementById('review-container').innerHTML = reviewHTML;
@@ -885,6 +1158,7 @@
             document.getElementById('kuis').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Init
         window.onload = function() {
             renderQuestion();
         }
